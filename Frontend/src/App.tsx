@@ -3,6 +3,7 @@ import "./index.css";
 import "./App.scss";
 import RegisterPage from "./pages/RegisterPage";
 import Header from "./components/Header";
+import LoginPage from "./pages/LoginPage";
 
 
 export default function App() {
@@ -10,7 +11,9 @@ export default function App() {
     <BrowserRouter>
       <Header />
           <Routes>
+            <Route path="/" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            
           </Routes>
     </BrowserRouter>
   );
