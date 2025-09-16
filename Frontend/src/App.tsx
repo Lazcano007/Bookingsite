@@ -1,23 +1,17 @@
-// App.tsx (exempel)
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import RegisterPage from "./pages/register";
 import "./index.css";
+import "./App.scss";
+import RegisterPage from "./pages/RegisterPage";
+import Header from "./components/Header";
+
 
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen w-full">
-        <header className="pt-6 text-center">
-          <h1 className="brand-title text-3xl sm:text-4xl">Fresh Line Barbers</h1>
-        </header>
-        
-        <main className="flex justify-center items-start sm:items-center py-10">
+      <Header />
           <Routes>
-            <Route path="/" element={<RegisterPage />} />
             <Route path="/register" element={<RegisterPage />} />
           </Routes>
-        </main>
-      </div>
     </BrowserRouter>
   );
 }
