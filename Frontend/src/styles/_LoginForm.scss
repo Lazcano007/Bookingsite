@@ -1,7 +1,7 @@
 .login-form-container {
   
   background: white;
-  padding: 2rem;
+  padding: 1rem;
   border-radius: 16px;
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
   max-width: 350px;
@@ -42,6 +42,10 @@
     border: 2px solid black;
     border-radius: 10px;
     font-size: 1rem;
+  }
+
+  .p {
+    color: black;
   }
 
 }

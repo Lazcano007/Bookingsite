@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Button from "./Button";
 import "../styles/_RegisterForm.scss";
+import OrSeparator from "./OrSeparator";
+import {Link} from "react-router-dom";
 
 export default function RegisterForm() {
   const [name, setName] = useState("");
@@ -39,6 +41,13 @@ export default function RegisterForm() {
         </div>
 
         <Button type="submit">Register</Button>
+        
+        <OrSeparator/>
+        
+        <Link to="/">
+        <Button type="submit">Login</Button>
+        </Link>
+
       </form>
     </div>
   );

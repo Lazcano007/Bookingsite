@@ -1,0 +1,19 @@
+.or-separator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+ 
+
+  &::before, &::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #000000; 
+  }
+
+  span {
+    font-size: 1rem;
+    color: #333;
+    font-weight: 600;
+  }
+}

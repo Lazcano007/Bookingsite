@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Button from "./Button";
 import "../styles/_LoginForm.scss";
+import OrSeparator from "./OrSeparator";
+import { Link } from "react-router-dom";
 
 export default function LoginForm() {
     const [name, setName] = useState("");
@@ -26,6 +28,12 @@ export default function LoginForm() {
                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password"/>
             </div>
                 <Button type="submit">Login</Button>
+                
+                <OrSeparator/>
+
+                <Link to="/register">
+                <Button type="submit">Register</Button>
+                </Link>
             </form>
         </div>    
 
