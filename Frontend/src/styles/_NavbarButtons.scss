@@ -1,0 +1,23 @@
+.navbar {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.navbtn {
+    background-color: white;
+    color: black;
+    text-decoration: none;
+    border-radius: 900px;
+    padding: 10px 20px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 20px;
+    display: inline-block;
+    transition: all 0.3s ease;
+
+    &:hover {
+    background-color: #5a3df2;
+    }
+}

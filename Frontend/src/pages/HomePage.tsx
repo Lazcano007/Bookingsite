@@ -3,6 +3,7 @@ import ServiceCard, {type Service} from "../components/ServiceCard";
 import Header from "../components/Header";
 import "../styles/_HomePage.scss";
 import BookButton from "../components/BookButton";
+import NavbarButtons from "../components/NavbarButtons";
 
 
 export default function Service() {
@@ -22,15 +23,7 @@ export default function Service() {
   return (
     <div className="home">
 
-      <nav className="home_nav">
-    
-        <button className="pill_btn">BOOK</button>
-        <button className="pill_btn">MY BOOKING</button>
-        <button className="pill_btn">HISTORY</button>
-        <button className="pill_btn">PROFILE</button>
-      </nav>
-
-
+      <NavbarButtons />
       <h2 className="home_selection-title">BOOK</h2>
 
       <div className="service_grid">

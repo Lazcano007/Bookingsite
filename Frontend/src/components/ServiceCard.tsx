@@ -17,13 +17,12 @@ type ServiceCard = {
 
 
 export default function ServiceCard({service, onSelect }: ServiceCard) {
-    const {title, description, price} = service;
+    const {title, price} = service;
 
 
     return (
         <div className ="service-card" role = "group" >
             <h3 className="service-card_title">{title}</h3>
-            {description && (<p className="service-card_description">{description}</p>)}
             <p className="service-card_price">{price} kr</p>
 
             <BookButton onClick={() => onSelect?.(service)} />

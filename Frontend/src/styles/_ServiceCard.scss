@@ -8,27 +8,38 @@
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
   width: 400px;
   justify-self: center;
+  flex-wrap: wrap;
 
 }
 
 .service-card_title {
-  font-size: 23px;
+  font-size: 25px;
   font-weight: 700;
   margin: 0 0 10px;
-  line-height: 1.25;
 }
 
-.service-card_description {
-  font-size: 14px;
-  margin: 0 0 8px;
-}
 
 .service-card_price {
   font-size: 23px;
-  margin: 0 0 12px;
+  margin: 0 0 10px;
 }
 
 .service-card .book-btn {
   margin: 10px;
   display: inline-block;
+}
+
+
+@media (max-width: 450px) {
+  .service-card {
+    width: 90%;
+    margin: 20px;
+    padding: 12px;
+  }
+
+  .service-card_title {
+    font-size: 17px;
+    margin-bottom: 8px;
+  }
+ 
 }
