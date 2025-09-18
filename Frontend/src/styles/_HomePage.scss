@@ -1,0 +1,51 @@
+
+.home {
+  background: #4504dd; 
+  padding: 35px;
+  border-radius: 100px;
+  width: 90%;
+  margin: auto;  
+
+
+}
+
+.home_title {
+  text-align: center;
+  font-size: 44px;
+  line-height: 1.1;
+  margin: 0 0 24px;
+  font-weight: 700;
+}
+
+.home_nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.pill {
+  background: white;
+  color: black;
+  border: none;
+  border-radius: 900px;
+  padding: 8px 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.home_selection-title {
+  text-align: center;
+  margin: 25px;
+  font-size: 35px;
+  text-decoration: underline;
+}
+
+.services-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  width: 100%;
+}

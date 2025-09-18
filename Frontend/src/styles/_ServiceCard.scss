@@ -1,0 +1,34 @@
+.service-card {
+  background: white;
+  color: black;
+  margin: 60px;
+  border-radius: 14px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  width: 400px;
+  justify-self: center;
+
+}
+
+.service-card_title {
+  font-size: 23px;
+  font-weight: 700;
+  margin: 0 0 10px;
+  line-height: 1.25;
+}
+
+.service-card_description {
+  font-size: 14px;
+  margin: 0 0 8px;
+}
+
+.service-card_price {
+  font-size: 23px;
+  margin: 0 0 12px;
+}
+
+.service-card .book-btn {
+  margin: 10px;
+  display: inline-block;
+}
