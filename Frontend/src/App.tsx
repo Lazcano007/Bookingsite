@@ -5,7 +5,9 @@ import RegisterPage from "./pages/RegisterPage";
 import Header from "./components/Header";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
-
+import MyBookingsPage from "./pages/MyBookingsPage";
+import HistoryPage from "./pages/HistoryPage";
+import Profile from "./pages/ProfilePage";
 
 
 export default function App() {
@@ -16,9 +18,9 @@ export default function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/bookings" element={<div>My bookings</div>} />
-            <Route path="/history" element={<div>History</div>} />
-            <Route path="/profile" element={<div>Profile</div>} />
+            <Route path="/bookings" element={<MyBookingsPage/>} />
+            <Route path="/history" element={<HistoryPage />} />
+            <Route path="/profile" element={<Profile/>} />
           </Routes>
     </BrowserRouter>
   );

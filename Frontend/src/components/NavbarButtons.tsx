@@ -32,8 +32,8 @@ export default function NavbarButtons({
     ],
     }: NavbarButtonsProps) {
         return (
-       
-       <nav className="navbar">
+    
+        <nav className="navbar">
         {items.map((item) => (
             <NavButton key={item.to} {...item} />
         ))}
