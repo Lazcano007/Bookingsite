@@ -4,6 +4,9 @@
     border-radius: 70px;
     width: 90%;
     margin: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 .profile_selection-title {
@@ -11,4 +14,62 @@
     margin: 25px;
     font-size: 35px;
     text-decoration: underline;
+}
+
+
+.profile-card {
+    display: flex;
+    justify-content: center;
+    background: white;
+    border-radius: 15px;
+    padding: 0 30px;
+    width: 340px;
+}
+
+/* Grå innerpanel */
+.profile-info {
+  border-radius: 15px;
+  width: 100%;
+  padding: 20px;
+  display: grid;
+  gap: 20px;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.form-row label {
+  color: black;
+  font-weight: 700;
+}
+
+
+.form-row input {
+  width: 100%;
+  background: rgb(205, 204, 204);
+  border: none;
+  border-radius: 15px;
+  padding: 10px 30px;
+  font-size: 18px;
+}
+
+
+@media (max-width: 520px) {
+    .profile-card {
+        width: 95%;
+    }
+
+    .profile-card {
+        display: flex;
+        justify-content: center;
+        background: white;
+        border-radius: 15px;
+        padding: 0 20px;
+        width: 240px;
+    }
+
 }
