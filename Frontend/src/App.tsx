@@ -8,6 +8,9 @@ import HomePage from "./pages/HomePage";
 import MyBookingsPage from "./pages/MyBookingsPage";
 import HistoryPage from "./pages/HistoryPage";
 import Profile from "./pages/ProfilePage";
+import AdminDashboardBookingPage from "./adminPages/AdminDashboardBookingPage";
+import AdminProfilesPage from "./adminPages/AdminProfilesPage";
+import AdminEditProfilePage from "./adminPages/AdminEditProfilePage";
 
 
 export default function App() {
@@ -21,6 +24,12 @@ export default function App() {
             <Route path="/bookings" element={<MyBookingsPage/>} />
             <Route path="/history" element={<HistoryPage />} />
             <Route path="/profile" element={<Profile/>} />
+
+            {/* Admin routes */}
+            <Route path="/admin/bookings" element={<AdminDashboardBookingPage />} />
+            <Route path="/admin/profiles" element={<AdminProfilesPage />} />
+            <Route path="/admin/profile/:id" element={<AdminEditProfilePage />} />
+            
           </Routes>
     </BrowserRouter>
   );

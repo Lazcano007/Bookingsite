@@ -1,0 +1,88 @@
+.home {
+    background: #4504dd; 
+    padding:20px;
+    border-radius: 70px;
+    width: 90%;
+    margin: auto;
+
+}
+
+.adminEditPage_selection-title{
+    text-align: center;
+    margin: 25px;
+    font-size: 35px;
+    text-decoration: underline;
+}
+
+
+.adminEdit-card{
+    background: white;
+    display: flex;
+    justify-content: center;
+    border-radius: 20px;
+    padding: 20px;
+    width: 400px;
+    margin: auto;
+}
+
+.adminEdit-inner {
+    display: grid;
+    gap: 15px;
+    border-radius: 20px;
+    padding: 20px;
+    width: 85%;
+    position: relative;
+    background: #cccccc;
+}
+
+.delete-btn {
+    position: absolute;
+    color: white;
+    top: 10px;
+    right: 10px;
+    background: rgb(255, 0, 0);
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 15px;
+    transition: 0.3s ease;
+    
+
+    &:hover {
+        background-color: #b90f06;
+    }
+}
+
+
+.adminEdit-label {
+    display: grid;
+    gap: 15px;
+    color:black;
+    font-weight: bold;
+}
+
+
+.adminEdit-input {
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.save-btn {
+    background: rgb(228, 228, 228);
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 15px;
+    transition: 0.3s ease;
+    width: 100px;
+    margin: 0 auto;
+    &:hover {
+        background-color: #5a3df2;
+    }
+}
