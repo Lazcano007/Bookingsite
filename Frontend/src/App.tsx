@@ -11,6 +11,7 @@ import Profile from "./pages/ProfilePage";
 import AdminDashboardBookingPage from "./adminPages/AdminDashboardBookingPage";
 import AdminProfilesPage from "./adminPages/AdminProfilesPage";
 import AdminEditProfilePage from "./adminPages/AdminEditProfilePage";
+import AdminAddProfilePage from "./adminPages/_AdminAddProfilePage";
 
 
 export default function App() {
@@ -29,6 +30,7 @@ export default function App() {
             <Route path="/admin/bookings" element={<AdminDashboardBookingPage />} />
             <Route path="/admin/profiles" element={<AdminProfilesPage />} />
             <Route path="/admin/profile/:id" element={<AdminEditProfilePage />} />
+            <Route path="/admin/add-profile" element={<AdminAddProfilePage />}  />
             
           </Routes>
     </BrowserRouter>

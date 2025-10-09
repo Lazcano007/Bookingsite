@@ -27,12 +27,12 @@ export default function LoginForm() {
                 <label>Password</label>
                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password"/>
             </div>
-                <Button type="submit">Login</Button>
-                
+                <Link to="/">
+                    <Button type="submit">Login</Button>
+                </Link>
                 <OrSeparator/>
-
                 <Link to="/register">
-                <Button type="submit">Register</Button>
+                    <Button type="submit">Register</Button>
                 </Link>
             </form>
         </div>    

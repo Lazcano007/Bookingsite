@@ -1,11 +1,9 @@
 .login-form-container {
-  background: white;
-  padding: 1rem;
-  border-radius: 15px;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
   max-width: 350px;
-  width: 100%;
   margin: 0 auto;
+  padding: 1rem;
+  background: white;
+  border-radius: 15px;
   text-align: center;
 }
 
@@ -19,30 +17,37 @@
 .login-form {
   display: flex;
   flex-direction: column;
-  border: none;
   gap: 1rem;
 }
 
 .form-group {
-  text-align: left;
+  flex-direction: column;
 
   label {
-    display: block;
     color: black;
     margin-bottom: 0.25rem;
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: 1rem;
+    font-weight: bold;
   }
 
   input {
     width: 90%;
-    padding: 0.5rem 0.75rem;
+    padding: 0.5rem;
     border-radius: 10px;
+    border: 2px solid rgba(119, 119, 119, 0.172);
     font-size: 1rem;
+    outline: none;
   }
 
-  .p {
-    color: black;
+  input:focus {
+    border-color: #6547ff;
   }
 
+}
+
+
+@media (max-width: 400px) {
+  .login-form-container {
+    width: 80%;
+  }
 }

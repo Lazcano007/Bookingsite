@@ -31,7 +31,9 @@ export default function MyBooking() {
                                 </span>
                                 <span className="booking-service">{b.service}</span>
                             </div>
-                            <button className="booking-cancel" onClick={() => console.log("Cancel clicked:", b.id)}>CANCEL APPOINTMENT</button>
+                            <button className="booking-cancel" onClick={() => { 
+                                console.log("Cancel clicked:", b.id); 
+                                alert("Your cancelled your appointment (Fake)")}}>CANCEL APPOINTMENT</button>
                         </div>
                     ))}
                     {booking.length === 0 && (

@@ -29,10 +29,10 @@ export default function _AdminEditPage() {
 
             <div className="adminEdit-card">
                 <div className="adminEdit-inner">
-                    <button className="delete-btn" onClick={() => alert("Deleted (simulerat)")}>DELETE</button>
+                    <button className="delete-btn" onClick={() => {navigate("/admin/profiles"); alert("Deleted (Fake)")}}>DELETE</button>
                     <label className="adminEdit-label">Name:</label>
                     <input type="text" defaultValue={profile.name} className="adminEdit-input"/>
-                    <button className="save-btn" onClick={() => navigate("/admin/profiles")}>SAVE</button>
+                    <button className="save-btn" onClick={() => {navigate("/admin/profiles"); alert ("User updated (Fake)")}}>SAVE</button>
                 </div>
             </div>
         </div>

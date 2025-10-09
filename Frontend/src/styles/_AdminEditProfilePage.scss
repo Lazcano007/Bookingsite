@@ -86,3 +86,10 @@
         background-color: #5a3df2;
     }
 }
+
+
+@media (max-width: 560px) {
+    .adminEdit-card {
+        width: 80%;
+    }
+}

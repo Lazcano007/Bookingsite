@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import ServiceCard, { type Service } from "../components/ServiceCard";
 import Header from "../components/Header";
 import "../styles/_HomePage.scss";
@@ -17,10 +17,14 @@ export default function Service() {
   ];
 
   const [expandedId, setExpandedId] = useState<string | null>(null); // Låter en services kort vara öppen åtgången 
-
   const [selectedDate, setSelectedDate] = useState<Date | null> (null)
   const [selectedTime, setSelectedTime] = useState<string | null> (null)
+  const [confirmAction, setConfirmAction] = useState<(() => void) | null>(null);
 
+  const handleConfirmSetup = useCallback(  // Sparar funktionen från calender-komponenten så att den inte skapas om vid varje rendering
+    (cb: () => void) => setConfirmAction(() => cb),   // tar emot en funktion (callback/cb) från kalender och sparar den i state (confirmAction) så den kan köras senare när man klickar på confirm knappen
+    []
+  );
 
   return (
     <div className="home">
@@ -52,10 +56,17 @@ export default function Service() {
                       setSelectedDate(date);
                       if (time) setSelectedTime(time);  //visar knappen efter tiden e vald
                     }}
+                    onConfirm={handleConfirmSetup}
                   />
                 </div>
                 {selectedDate && selectedTime && (
-                  <ConfirmButton onClick={() => console.log("confirm click")}>CONFIRM</ConfirmButton>
+                  <ConfirmButton onClick={() => {
+                    if (confirmAction) {
+                      confirmAction(); 
+                    } else { 
+                      alert ("No confirmation done"); 
+                    }}
+                  } >CONFIRM</ConfirmButton>
                 )}
               </div>
             )}

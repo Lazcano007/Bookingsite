@@ -36,7 +36,7 @@ export default function AdminProfilesPage() {
                 </div>
                     </ul>
                     
-                    <button className="adminProfile-add">ADD</button>
+                    <button className="adminProfile-add" onClick={()=> navigate("/admin/add-profile")}>ADD</button>
             </div>
         </div>
     );

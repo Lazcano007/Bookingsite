@@ -2,22 +2,39 @@ import { useState } from "react";
 import Button from "./Button";
 import "../styles/_RegisterForm.scss";
 import OrSeparator from "./OrSeparator";
-import {Link} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
 
-export default function RegisterForm() {
+
+type RegisterFormProps = {
+  isAdmin?: boolean;
+};
+
+export default function RegisterForm({ isAdmin}: RegisterFormProps)  {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     console.log("Register data:", { name, email, password, confirmPassword });
+    
+    alert(isAdmin ? "Profile Added (simulerat)" : "You can login now!" );
+  
+
+    if (isAdmin) {
+      navigate("/admin/profiles");
+    } else {
+      navigate("/login");
+      console.log("User is Registered!");
+    }
+  
   }
 
   return (
     <div className="register-form-container">
-      <h2 className="register-title">REGISTER</h2>
+      <h2 className="register-title">{isAdmin ? "ADD PROFILE" : "REGISTER"} </h2>
 
       <form onSubmit={handleSubmit} className="register-form">
         <div className="form-group">
@@ -40,14 +57,15 @@ export default function RegisterForm() {
           <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@example.com"/>
         </div>
 
-        <Button type="submit">Register</Button>
-        
-        <OrSeparator/>
-        
-        <Link to="/">
-        <Button type="submit">Login</Button>
-        </Link>
-
+        <Button type="submit">{isAdmin ? "ADD" : "Register"} </Button>
+        {!isAdmin && (
+          <> 
+            <OrSeparator/>
+            <Link to="/Login">
+            <Button type="submit">Login</Button>
+            </Link>
+          </>
+        )}
       </form>
     </div>
   );

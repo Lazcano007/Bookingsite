@@ -1,16 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/_Calender.scss"
 import Button from "./Button";
 
 
 export default function Calender({
-    onSelect,}: 
-    {onSelect?: (date: Date, time?: string) => void
+    onSelect, onConfirm }: {
+    onSelect?: (date: Date, time?: string) => void;
+    onConfirm?: (callback: () => void) => void;
     }) {
     const [view, setView] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [selectedTime, setSelectedTime] = useState<string | null>(null);
+    const [isBooked, setIsBooked] = useState(false);
 
+    function handleConfirm() {
+        if(!selectedDate || !selectedTime) {
+            return;
+        }
+        alert(`Appointment booked for ${selectedDate?.toLocaleDateString()} at ${selectedTime}`);
+        setSelectedDate(null);
+        setSelectedTime(null);
+        setIsBooked(true);
+        setTimeout(() => setIsBooked(false), 3000);
+    }    
+    useEffect(() => {
+        if (onConfirm ) {
+            onConfirm(() => handleConfirm());
+        }
+    },[onConfirm, selectedDate, selectedTime]);
+    
 
         // calender 
     const y = view.getFullYear();
@@ -107,20 +125,12 @@ export default function Calender({
                 
                     <div className="time-grid">
                         {timeSlots.map((time) => ( 
-                            <button 
-                                key={time} 
-                                className={time === selectedTime ? "time selected" : "time"} 
-                                onClick={()=> {
-                                    setSelectedTime(time);
-                                    onSelect?.(selectedDate, time)
-                            }}
-                        >
-                        {time}
-                        </button>
+                            <button key={time} className={time === selectedTime ? "time selected" : "time"} onClick={()=> {setSelectedTime(time); onSelect?.(selectedDate, time)}}>{time}</button>
                     ))}
                     </div>
                 </div> 
             )}
+            
         </div>
     );
 }
