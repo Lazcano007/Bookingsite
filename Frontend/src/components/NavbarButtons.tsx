@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/_NavbarButtons.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type NavItem = {
     label: string;
@@ -31,13 +31,31 @@ export default function NavbarButtons({
         { label: "PROFILE", to: "/profile" },
     ],
     }: NavbarButtonsProps) {
-        return (
+        const navigate = useNavigate();
+        const token = localStorage.getItem("token");
     
-        <nav className="navbar">
-        {items.map((item) => (
-            <NavButton key={item.to} {...item} />
-        ))}
-        </nav>
+        const handleLogout = () => {
+            localStorage.removeItem("token");
+            localStorage.removeItem("userId");
+            localStorage.removeItem("userName");
+            navigate("/login")
+            };
+
+        const devMode = true;
+        const shouldShowLogout = devMode || token;
+        
+        return (
+            <div className="navbar-wrapper">
+                <nav className="navbar">
+                {items.map((item) => (
+                    <NavButton key={item.to} {...item} />
+                ))}
+                {shouldShowLogout  && (
+                    <button className="logout-btn" onClick={handleLogout}>LOG OUT</button>
+                )}
+                </nav>
+            </div>
+        
     );
 }
 

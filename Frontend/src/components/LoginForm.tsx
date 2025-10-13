@@ -5,12 +5,12 @@ import OrSeparator from "./OrSeparator";
 import { Link } from "react-router-dom";
 
 export default function LoginForm() {
-    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        console.log("Login data:", { name, password });
+        console.log("Login data:", { email, password });
     }
 
     return (
@@ -19,8 +19,8 @@ export default function LoginForm() {
 
             <form onSubmit={handleSubmit} className="login-form">
                 <div className="form-group">
-                <label>Name</label>
-                <input value={name}onChange={(e) => setName(e.target.value)} placeholder="Name"/>
+                <label>Email</label>
+                <input value={email}onChange={(e) => setEmail(e.target.value)} placeholder="email"/>
             </div>
 
             <div className="form-group">
