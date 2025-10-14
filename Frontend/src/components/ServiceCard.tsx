@@ -1,4 +1,3 @@
-import React from "react";
 import "../styles/_ServiceCard.scss";
 import BookButton from "./BookButton";
 

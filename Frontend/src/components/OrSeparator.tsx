@@ -1,4 +1,3 @@
-import react from "react";
 import "../styles/_OrSeparator.scss";
 
 export default function OrSeparator() {
