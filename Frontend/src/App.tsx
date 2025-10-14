@@ -15,11 +15,13 @@ import AdminAddProfilePage from "./adminPages/_AdminAddProfilePage";
 
 
 export default function App() {
+  const token = localStorage.getItem("token");
+  
   return (
     <BrowserRouter>
       <Header />
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={ token ? <HomePage /> : <LoginPage/>} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/bookings" element={<MyBookingsPage/>} />
