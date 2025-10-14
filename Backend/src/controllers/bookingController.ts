@@ -38,16 +38,6 @@ export const getUserBookings = async (req: Request, res: Response) => {
     }
 } 
 
-// Hämtar alla bokingar för ADMIN 
-export const getAllBookings = async (req: Request, res: Response) =>  {
-    try {
-        const bookings = await Booking.find().populate("userId", "name email");
-        res.status(200).json(bookings);
-    }catch (error) {
-        res.status(500).json({message: "Theres been an error fetching all bookings", error});
-    }
-}
-
 export const getBookedTimes = async (req:Request, res: Response) => {
     try {
         const {date} = req.params;
@@ -55,7 +45,7 @@ export const getBookedTimes = async (req:Request, res: Response) => {
             return res.status(400).json({message: "You have to provide a date"});
         }
         const bookings = await Booking.find({date, status: "active"});
-
+        
         const bookedTimes = [...new Set(bookings.map((b)=> b.time))].sort();
         res.status(200).json({date, bookedTimes});
     }catch (error) {
@@ -73,7 +63,7 @@ export const cancelBooking = async (req: Request, res:Response) => {
         }
         
         res.status(200).json({message: "You have cancelled you booking", booking});
-
+        
     } catch (error) {
         res.status(500).json({message: "Theres been an error cancelling your booking", error});
     }
@@ -92,7 +82,7 @@ export const getUpcomingBooking = async (req:Request, res:Response ) => {
         const upcoming = allBookings.filter(b=> new Date(b.date) >= today);
 
         upcoming.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-
+        
         res.status(200).json(upcoming);
         
     } catch (error) {
@@ -114,6 +104,18 @@ export const getBookingHistory = async (req:Request, res:Response ) => {
     }catch (error) {
         res.status(500).json({message: "Theres been an error fetching your booking history", error});
     }
-
+    
 }
 
+
+//-------ADMIN----------
+
+// Hämtar alla bokingar för ADMIN 
+export const getAllBookings = async (req: Request, res: Response) =>  {
+    try {
+        const bookings = await Booking.find().populate("userId", "name email");
+        res.status(200).json(bookings);
+    }catch (error) {
+        res.status(500).json({message: "Theres been an error fetching all bookings", error});
+    }
+}

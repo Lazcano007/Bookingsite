@@ -61,3 +61,44 @@ export const getUserProfile = async (req: Request, res: Response) => {
         res.status(500).json({message: "Theres been a server error", error});
     }
 }
+
+
+//--------ADMIN----------
+
+export const getAllUser = async (req: Request, res:Response ) => {
+    try{
+        const users = await User.find({}, "-password") //den tar itne med lösenordet
+        res.status(200).json(users);
+    }catch(error) {
+        return res.status(500).json({message: "Theres beena an error fetching all user"})
+    }
+};
+
+
+export const updateUser = async (req:Request, res:Response) => {
+    try {
+        const {id} = req.params;
+        const updatedUser = await User.findByIdAndUpdate(id, req.body, {new: true});
+        if(!updatedUser) {
+            return res.status(404).json({message: "This user is not found"});
+        }
+        res.status(200).json({message: "This user has been successfilly updated", user: updatedUser})
+
+    } catch(error) {
+        return res.status(500).json({message: "Theres been an error fetching all user"})
+    }
+}
+
+
+export const deleteUser = async (req:Request, res: Response) => {
+    try{
+        const {id} = req.params;
+        const deleteUser = await User.findByIdAndDelete(id);
+        if(!deleteUser) {
+            return res.status(404).json({message: "This user is not found"})
+        }
+        res.status(200).json({message: "You successfully deleted this user", user: deleteUser})
+    }catch (error) {
+        return res.status(500).json({message: "Theres been an error deleting user"})
+    }
+}

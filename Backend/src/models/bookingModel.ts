@@ -18,7 +18,7 @@ const bookingSchema = new Schema<IBooking>({
     price: { type: Number, required: true },
     date: { type: String, required: true },
     time: { type: String, required: true },
-    status: { type: String, default: "active" },
+    status: { type: String, enum: ["active", "cancelled"], default: "active" },
     }, 
     {timestamps: true,}
 );
