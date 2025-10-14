@@ -29,11 +29,11 @@ export default function Calender({
     
 
         // calender 
-    const y = view.getFullYear();
-    const m = view.getMonth();
-    const first = new Date(y, m, 1); 
+    const year = view.getFullYear();
+    const month = view.getMonth();
+    const first = new Date(year, month, 1); 
     const startDay = (first.getDay() + 6) % 7;
-    const daysInMonth = new Date(y, m + 1, 0).getDate();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
     const totalCells = Math.ceil((startDay + daysInMonth) / 7) * 7;
 
 
@@ -54,9 +54,9 @@ export default function Calender({
     const cells = [];
     for (let i = 0; i <totalCells; i++) {
         const day = i - startDay +1;
-        const d = new Date(y, m, day);
+        const d = new Date(year, month, day);
 
-        const inMonth = d.getMonth() === m;
+        const inMonth = d.getMonth() === month;
         const past = stripTime(d) < stripTime(new Date());
         const today = sameDate(d, new Date());
         const isSelected = selectedDate && sameDate(d, selectedDate);
@@ -100,11 +100,11 @@ export default function Calender({
     return (
         <div className="cal">
             <div className="cal-header">
-                <button onClick={() => setView(new Date(y, m - 1, 1))}>‹</button>
+                <button onClick={() => setView(new Date(year, month - 1, 1))}>‹</button>
                 <div className="cal-title"> 
-                    {first.toLocaleString("en", {month: "long"})} {y}
+                    {first.toLocaleString("en", {month: "long"})} {year}
                 </div>
-                <button onClick={() => setView(new Date(y, m + 1, 1))}>›</button>
+                <button onClick={() => setView(new Date(year, month + 1, 1))}>›</button>
             </div>
 
             <div className="cal-grid">
