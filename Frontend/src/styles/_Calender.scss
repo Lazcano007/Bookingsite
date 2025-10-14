@@ -121,17 +121,17 @@
 }
 
 .drawer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  margin-top: 16px;
-  padding: 16px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 8px 28px rgba(0,0,0,.12);
-  width: 100%;
-  max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+    padding: 16px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 28px rgba(0,0,0,.12);
+    width: 100%;
+    max-width: 480px;
 }
 
 .calendar-wrap { 
@@ -142,27 +142,10 @@
 
 
 .confirm-button {
-  height: auto;
-  padding: 10px 18px;
-  border-radius: 999px;
-  align-self: center;
-}
-
-.booking-message {
-  margin-top: 20px;
-  text-align: center;
-  font-weight: 600;
-  color: #fff;
-  background: #5a3df2;
-  border-radius: 12px;
-  padding: 10px 20px;
-  animation: fadeOut 3s forwards;
-}
-
-@keyframes fadeOut {
-  0% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { opacity: 0; }
+    height: auto;
+    padding: 10px 18px;
+    border-radius: 999px;
+    align-self: center;
 }
 
 

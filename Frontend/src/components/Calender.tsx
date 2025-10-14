@@ -11,7 +11,7 @@ export default function Calender({
     const [view, setView] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [selectedTime, setSelectedTime] = useState<string | null>(null);
-    
+
     function handleConfirm() {
         if(!selectedDate || !selectedTime) {
             return;
@@ -119,10 +119,8 @@ export default function Calender({
 
             {selectedDate && (
                 <div className="time-slots">
-
-
                     <h4>Choose a time{" "} {selectedDate.toLocaleDateString("en", { weekday: "long", month: "short", day: "numeric",})}</h4>
-                
+
                     <div className="time-grid">
                         {timeSlots.map((time) => ( 
                             <button key={time} className={time === selectedTime ? "time selected" : "time"} onClick={()=> {setSelectedTime(time); onSelect?.(selectedDate, time)}}>{time}</button>
