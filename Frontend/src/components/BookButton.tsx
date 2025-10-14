@@ -1,4 +1,3 @@
-import React from "react";
 import "../styles/_BookButton.scss";
 
 type BookButtonProps = {

@@ -1,4 +1,3 @@
-import React from "react"
 import NavbarButtons from "../components/NavbarButtons"
 import "../styles/_AdminEditProfilePage.scss"
 import { useParams, useNavigate } from "react-router-dom";

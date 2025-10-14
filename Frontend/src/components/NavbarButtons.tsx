@@ -1,4 +1,3 @@
-import React from "react";
 import "../styles/_NavbarButtons.scss";
 import { Link, useNavigate } from "react-router-dom";
 

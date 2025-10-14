@@ -1,4 +1,3 @@
-import React from "react";
 import "../styles/_AdminAddProfilePage.scss";
 import NavbarButtons from "../components/NavbarButtons";
 import RegisterForm from "../components/RegisterForm";

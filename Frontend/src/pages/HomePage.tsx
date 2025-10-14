@@ -1,8 +1,6 @@
-import React, { useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import ServiceCard, { type Service } from "../components/ServiceCard";
-import Header from "../components/Header";
 import "../styles/_HomePage.scss";
-import BookButton from "../components/BookButton";
 import NavbarButtons from "../components/NavbarButtons";
 import Calender from "../components/Calender";
 import ConfirmButton from "../components/ConfirmButton";

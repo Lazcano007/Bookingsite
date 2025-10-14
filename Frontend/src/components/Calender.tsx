@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../styles/_Calender.scss"
-import Button from "./Button";
+
 
 
 export default function Calender({
@@ -11,8 +11,7 @@ export default function Calender({
     const [view, setView] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [selectedTime, setSelectedTime] = useState<string | null>(null);
-    const [isBooked, setIsBooked] = useState(false);
-
+    
     function handleConfirm() {
         if(!selectedDate || !selectedTime) {
             return;
@@ -20,8 +19,7 @@ export default function Calender({
         alert(`Appointment booked for ${selectedDate?.toLocaleDateString()} at ${selectedTime}`);
         setSelectedDate(null);
         setSelectedTime(null);
-        setIsBooked(true);
-        setTimeout(() => setIsBooked(false), 3000);
+
     }    
     useEffect(() => {
         if (onConfirm ) {
@@ -121,6 +119,8 @@ export default function Calender({
 
             {selectedDate && (
                 <div className="time-slots">
+
+
                     <h4>Choose a time{" "} {selectedDate.toLocaleDateString("en", { weekday: "long", month: "short", day: "numeric",})}</h4>
                 
                     <div className="time-grid">

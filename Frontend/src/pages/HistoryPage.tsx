@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import {useMemo, useState} from "react";
 import "../styles/_HistoryPage.scss"
 import NavbarButtons from "../components/NavbarButtons";
 

@@ -148,6 +148,25 @@
   align-self: center;
 }
 
+.booking-message {
+  margin-top: 20px;
+  text-align: center;
+  font-weight: 600;
+  color: #fff;
+  background: #5a3df2;
+  border-radius: 12px;
+  padding: 10px 20px;
+  animation: fadeOut 3s forwards;
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+
+
 @media screen and (max-width: 390px) {
     .cal {
         background: white;
@@ -159,3 +178,4 @@
         color: black;
     }
 }
+
