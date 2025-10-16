@@ -5,7 +5,7 @@ import { protect } from "../middlewares/authMiddleware";
 const router = Router();
 
 router.post("/register", registerUser);
-router.post("/login", loginUser);
+router.post("/login", loginUser );
 router.get("/profile", protect, getUserProfile);
 
 

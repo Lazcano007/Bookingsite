@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
 import User from "../models/userModel";
-import bcrypt from "bcrypt";
+import { hashPassword, verifyPassword } from "../utils/bcrypt";
 import generateToken from "../utils/generateToken";
 import { AuthenticatedRequest } from "../middlewares/authMiddleware";
+import Booking from "../models/bookingModel";  
+import mongoose from "mongoose";
 
 export const registerUser = async (req: Request, res: Response) => {
 
@@ -22,7 +24,7 @@ export const registerUser = async (req: Request, res: Response) => {
         return res.status(400).json({ message: "This user already exists"});
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await hashPassword(password);
     const newUser = await User.create({name, email, password: hashedPassword});
 
     res.status(201).json({_id: newUser._id, name: newUser.name, email: newUser.email, token: generateToken((newUser._id as string).toString())});
@@ -42,7 +44,7 @@ export const loginUser = async (req: Request, res: Response) => {
             return res.status(400).json({message: "Wrong email or password"});
         }
 
-        const isCorrectPassword = await bcrypt.compare(password, user.password);
+        const isCorrectPassword = await verifyPassword(password, user.password);
         if (!isCorrectPassword) {
             return res.status(400).json({message: "Wrong email or password"});
         }
@@ -77,8 +79,14 @@ export const getAllUser = async (req: Request, res:Response ) => {
 
 export const updateUser = async (req:Request, res:Response) => {
     try {
+
         const {id} = req.params;
-        const updatedUser = await User.findByIdAndUpdate(id, req.body, {new: true});
+        const {name} = req.body;
+        if(!name) {
+            return res.status(400).json({message: "You have to write a new name"})
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(id, {name}, {new: true, select: "-password"});
         if(!updatedUser) {
             return res.status(404).json({message: "This user is not found"});
         }
@@ -93,11 +101,13 @@ export const updateUser = async (req:Request, res:Response) => {
 export const deleteUser = async (req:Request, res: Response) => {
     try{
         const {id} = req.params;
-        const deleteUser = await User.findByIdAndDelete(id);
-        if(!deleteUser) {
+        const deletedUser = await User.findByIdAndDelete(id);
+        if(!deletedUser) {
             return res.status(404).json({message: "This user is not found"})
         }
-        res.status(200).json({message: "You successfully deleted this user", user: deleteUser})
+
+        const deletedBookings = await Booking.deleteMany({userId: new mongoose.Types.ObjectId(id)});
+        res.status(200).json({message: "You successfully deleted this user and their bookings", deletedUser, deletedBookingsCount: deletedBookings?.deletedCount ?? 0})
     }catch (error) {
         return res.status(500).json({message: "Theres been an error deleting user"})
     }
