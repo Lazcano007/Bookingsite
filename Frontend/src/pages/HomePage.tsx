@@ -1,12 +1,23 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import ServiceCard, { type Service } from "../components/ServiceCard";
 import "../styles/_HomePage.scss";
 import NavbarButtons from "../components/NavbarButtons";
 import Calender from "../components/Calender";
 import ConfirmButton from "../components/ConfirmButton";
+import { useNavigate } from "react-router-dom";
 
 
-export default function Service() {
+export default function HomePage() {
+  const navigate = useNavigate();
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if(!token) {
+      navigate("/login")
+    }
+  }, [navigate]);
+
   const services: Service[] = [
     { id: "1", title: "Kids’ haircut (6–12 years)", price: 400 },
     { id: "2", title: "Men’s haircut", price: 650 },
@@ -28,6 +39,8 @@ export default function Service() {
     <div className="home">
       <NavbarButtons />
       <h2 className="home_selection-title">BOOK</h2>
+
+      {message && <p className="home-message">{message}</p>}
 
       <div className="service-grid">
         {services.map((svc) => (
@@ -61,8 +74,9 @@ export default function Service() {
                   <ConfirmButton onClick={() => {
                     if (confirmAction) {
                       confirmAction(); 
+                      setMessage("Your booking is confirmed!")
                     } else { 
-                      alert ("No confirmation done"); 
+                      setMessage ("No confirmation done!"); 
                     }}
                   } >CONFIRM</ConfirmButton>
                 )}
