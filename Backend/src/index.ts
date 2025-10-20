@@ -11,16 +11,15 @@ const PORT = process.env.PORT || 3000;
 
 
 
-app.use( cors ({ origin: "http://localhost:5173"})
-);
+app.use( cors ({ origin: [ "http://localhost:5173", "https://fresh-line-barbers.netlify.app"], }));
 
-app.use( express.json());
+app.use(express.json());
 
 app.use('/api', router);
 
 app.get("/", (req, res) => {
   res.json({ message: "Server is upp and running!"})
-})
+});
 
 connectDB();
 
