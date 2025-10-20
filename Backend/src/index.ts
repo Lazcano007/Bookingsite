@@ -18,6 +18,10 @@ app.use( express.json());
 
 app.use('/api', router);
 
+app.get("/", (req, res) => {
+  res.json({ message: "Server is upp and running!"})
+})
+
 connectDB();
 
 app.listen(PORT, async () => {
