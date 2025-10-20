@@ -35,12 +35,12 @@ export default function LoginForm() {
             <form onSubmit={handleSubmit} className="login-form">
                 <div className="form-group">
                 <label>Email</label>
-                <input value={email}onChange={(e) => setEmail(e.target.value)} placeholder="email"/>
+                <input value={email}onChange={(e) => setEmail(e.target.value)} placeholder="email" required/>
             </div>
 
             <div className="form-group">
                 <label>Password</label>
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password"/>
+                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required/>
             </div>
 
                 <Button type="submit">Login</Button>
@@ -48,7 +48,7 @@ export default function LoginForm() {
                 <OrSeparator/>
                 
                 <Link to="/register">
-                <Button type="submit">Register</Button>
+                <Button type="button">Register</Button>
                 </Link>
             </form>
         </div>    
