@@ -28,7 +28,8 @@ export default function RegisterForm({ isAdmin}: RegisterFormProps)  {
 
     try {
         const res = await api.post("/auth/register", {name, email, password});
-
+        
+        console.log("Backend response:", res.data);
         localStorage.setItem("token", res.data.token);
 
         setMessage("You can now log in!")
