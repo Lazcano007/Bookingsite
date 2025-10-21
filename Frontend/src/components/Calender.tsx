@@ -1,33 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "../styles/_Calender.scss"
 
-
-
-export default function Calender({
-    onSelect, onConfirm }: {
+type CalenderProps = {
     onSelect?: (date: Date, time?: string) => void;
-    onConfirm?: (callback: () => void) => void;
-    }) {
+}
+
+export default function Calender({ onSelect } : CalenderProps) {
     const [view, setView] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [selectedTime, setSelectedTime] = useState<string | null>(null);
-
-    function handleConfirm() {
-        if(!selectedDate || !selectedTime) {
-            return;
-        }
-        alert(`Appointment booked for ${selectedDate?.toLocaleDateString()} at ${selectedTime}`);
-        setSelectedDate(null);
-        setSelectedTime(null);
-
-    }    
-    useEffect(() => {
-        if (onConfirm ) {
-            onConfirm(() => handleConfirm());
-        }
-    },[onConfirm, selectedDate, selectedTime]);
     
-
         // calender 
     const year = view.getFullYear();
     const month = view.getMonth();
@@ -35,7 +17,6 @@ export default function Calender({
     const startDay = (first.getDay() + 6) % 7;
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const totalCells = Math.ceil((startDay + daysInMonth) / 7) * 7;
-
 
     function stripTime(d: Date) {
         const x = new Date(d);

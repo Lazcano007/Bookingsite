@@ -1,15 +1,19 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ServiceCard, { type Service } from "../components/ServiceCard";
 import "../styles/_HomePage.scss";
 import NavbarButtons from "../components/NavbarButtons";
 import Calender from "../components/Calender";
 import ConfirmButton from "../components/ConfirmButton";
 import { useNavigate } from "react-router-dom";
+import { api } from "../api/axios";
 
 
 export default function HomePage() {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
+  const [expandedId, setExpandedId] = useState<string | null>(null); // Låter en services kort vara öppen åtgången 
+  const [selectedDate, setSelectedDate] = useState<Date | null> (null)
+  const [selectedTime, setSelectedTime] = useState<string | null> (null)
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -25,15 +29,37 @@ export default function HomePage() {
     { id: "4", title: "Women’s haircut", price: 800 },
   ];
 
-  const [expandedId, setExpandedId] = useState<string | null>(null); // Låter en services kort vara öppen åtgången 
-  const [selectedDate, setSelectedDate] = useState<Date | null> (null)
-  const [selectedTime, setSelectedTime] = useState<string | null> (null)
-  const [confirmAction, setConfirmAction] = useState<(() => void) | null>(null);
+  async function handleConfirmBooking() { 
+      try {
+        const token = localStorage.getItem("token");
+        const selectedService = services.find((s) => s.id === expandedId)!;   
+        
+        const res = await api.post(
+          "/bookings",
+          {
+            title: selectedService.title,
+            price: selectedService.price,
+            date: selectedDate!.toISOString(),
+            time: selectedTime!,
+          }, {
+            headers: { Authorization: `Bearer ${token}`}
+          },
+        );
+        
+        setMessage(`Your booking is confirmed at ${selectedTime}`)
+        console.log("booking cerated", res.data);
 
-  const handleConfirmSetup = useCallback(  // Sparar funktionen från calender-komponenten så att den inte skapas om vid varje rendering
-    (cb: () => void) => setConfirmAction(() => cb),   // tar emot en funktion (callback/cb) från kalender och sparar den i state (confirmAction) så den kan köras senare när man klickar på confirm knappen
-    []
-  );
+        setSelectedDate(null);
+        setSelectedTime(null);
+        setExpandedId(null);
+        
+      } catch (err: any) {
+            setMessage(err.response?.data?.message || "Theres been an eroor creating your booking");
+        }
+
+  }
+
+
 
   return (
     <div className="home">
@@ -67,18 +93,10 @@ export default function HomePage() {
                       setSelectedDate(date);
                       if (time) setSelectedTime(time);  //visar knappen efter tiden e vald
                     }}
-                    onConfirm={handleConfirmSetup}
                   />
                 </div>
                 {selectedDate && selectedTime && (
-                  <ConfirmButton onClick={() => {
-                    if (confirmAction) {
-                      confirmAction(); 
-                      setMessage("Your booking is confirmed!")
-                    } else { 
-                      setMessage ("No confirmation done!"); 
-                    }}
-                  } >CONFIRM</ConfirmButton>
+                  <ConfirmButton onClick={handleConfirmBooking}>CONFIRM</ConfirmButton>
                 )}
               </div>
             )}

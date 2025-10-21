@@ -7,8 +7,8 @@ type ConfirmButtonProps = {
 };
 
 
-export default function CorfirmButton({onClick, children}: ConfirmButtonProps) {
+export default function ConfirmButton({onClick, children}: ConfirmButtonProps) {
     return (
-        <button className="confirm-button" onClick={onClick}>{children|| "CONFIRM"}</button>
+        <button className="confirm-button" onClick={onClick}>{children}</button>
     );
 }

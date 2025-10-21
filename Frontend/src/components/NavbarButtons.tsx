@@ -1,64 +1,44 @@
 import "../styles/_NavbarButtons.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useFetchUser } from "../hooks/useFetchUser";
 
-type NavItem = {
-    label: string;
-    to: string;
-    onClick?: () => void;  
-};
 
-function NavButton({label, to, onClick}: NavItem) {
+export default function NavbarButtons() {
 
-    const {pathname} = window.location;
-    const isActive = pathname === to;
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { user, loading } = useFetchUser();
 
-    return (
-        <Link to={to} onClick={onClick} className={`navbtn ${isActive ? "navbtn--activate" :""}`}>{label}</Link>
-    )
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/login");
+    
 }
 
-type NavbarButtonsProps = {
-    items?: NavItem[];
-};
-
-
-export default function NavbarButtons({
-    items = [
+    const navItems = [
         { label: "BOOK", to: "/" },
         { label: "MY BOOKINGS", to: "/bookings" },
         { label: "HISTORY", to: "/history" },
         { label: "PROFILE", to: "/profile" },
-    ],
-    }: NavbarButtonsProps) {
-        const navigate = useNavigate();
-        const token = localStorage.getItem("token");
-    
-        const handleLogout = () => {
-            localStorage.removeItem("token");
-            localStorage.removeItem("userId");
-            localStorage.removeItem("userName");
-            navigate("/login")
-            };
+    ];
 
-        const devMode = true;
-        const shouldShowLogout = devMode || token;
-        
         return (
             <div className="navbar-wrapper">
                 <nav className="navbar">
-                {items.map((item) => (
-                    <NavButton key={item.to} {...item} />
+                {navItems.map((item) => (
+                    <Link key={item.to} to={item.to} className={`navbtn ${location.pathname === item.to ? "navbtn--active" : ""}`}> {item.label}</Link>
                 ))}
-                {shouldShowLogout  && (
+
+                {!loading && user && (
+                    <>
                     <button className="logout-btn" onClick={handleLogout}>LOG OUT</button>
+                    <span className="navbar-user">Welcome {user.name}!</span>
+                    </>
                 )}
                 </nav>
             </div>
         
     );
 }
-
-    
-
 
 
