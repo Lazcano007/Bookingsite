@@ -11,20 +11,27 @@ export default function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
+        setLoading(true);
     
         try{
             const res = await api.post("/auth/login", {email, password});
 
-            localStorage.setItem("token", res.data.token)    //sparar JWT-token i localstorage
-            setMessage("Welcome to Fresh Line Barber")
-            navigate("/")
+            localStorage.setItem("token", res.data.token);    //sparar JWT-token i localstorage
+            setMessage("Welcome to Fresh Line Barber");
+            
+            setTimeout(()=> {
+                navigate("/");
+            }, 300);
 
         }catch (err: any) {
             setMessage(err.response?.data?.message || "Wrong email or password!");
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -43,7 +50,7 @@ export default function LoginForm() {
                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required/>
             </div>
 
-                <Button type="submit">Login</Button>
+                <Button type="submit" disabled={loading}> {loading ? "Logging in..." : "Login"}</Button>
                 {message && <p className="login-message">{message}</p>}
                 <OrSeparator/>
                 

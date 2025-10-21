@@ -37,6 +37,7 @@ export default function MyBooking() {
             setBookings((prev) => prev.filter((b) => b._id !== id));
             setMessage("Your booking has been cancelled!")
         } catch (err: any) {
+            console.error(err);
             setMessage(err.response?.data?.message || "We couldnt cancel your booking");
         }
     }
