@@ -8,7 +8,6 @@ type Booking = {
     title: string;
     date: string;
     time: string;
-
 }
 
 export default function MyBooking() {
@@ -24,7 +23,6 @@ export default function MyBooking() {
                 setBookings(res.data);
             } catch (err: any) {
                 setToastMessage(err.response?.data?.message || "We couldnt fetch your bookings");
-                setTimeout(()=> setToastMessage(null), 3000);
             }
         }
         fetchBookings();
@@ -39,9 +37,7 @@ export default function MyBooking() {
             setToastMessage("Your booking has been cancelled!")
             setTimeout(()=> setToastMessage(null), 3000);
         } catch (err: any) {
-            console.error(err);
             setToastMessage(err.response?.data?.message || "We couldnt cancel your booking");
-            setTimeout(()=> setToastMessage(null), 3000);
         }
     }
 
