@@ -29,7 +29,7 @@ export default function LoginForm() {
             }, 300);
 
         }catch (err: any) {
-            setMessage(err.response?.data?.message || "Wrong email or password!");
+            setMessage(err.response?.data?.message || "You wrote wrong email or password!");
         } finally {
             setLoading(false);
         }
