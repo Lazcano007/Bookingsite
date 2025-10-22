@@ -1,52 +1,66 @@
-import {useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import "../styles/_HistoryPage.scss"
 import NavbarButtons from "../components/NavbarButtons";
-
+import { api } from "../api/axios";
 
 type HistoryItem = {
-    id:string;
-    dateLabel: string;
-    service: string;
+    _id:string;
+    title: string;
+    date: string;
+    time: string;
+    price: string;
 };
 
-
-
-
 export default function HistoryPage() {
-
     const [query, setQuery] = useState("");
+    const [history, setHistory] = useState<HistoryItem[]>([]);
+    const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-    const items: HistoryItem[] = [
-        { id: "1", dateLabel: "Wednesday 20 aug kl 13:30", service: "Kids’ haircut (6–12 years)" },
-        { id: "2", dateLabel: "Monday 13 sep kl 11:00", service: "Men’s haircut" },
-        { id: "3", dateLabel: "Friday 2 dec kl 18:30", service: "Beard trim / Wet shave)"},
-        { id: "4", dateLabel: "Wednesday 11 feb kl 10:00", service: "Women’s haircut"}
-    ];
+    useEffect(() => {
+        async function fetchHistory() {
+            try {
+                const token = localStorage.getItem("token");
+                
+                const res = await api.get("/bookings/history", {
+                    headers: { Authorization: `Bearer ${token}`},
+                });
+                setHistory(res.data);
+            } catch (err: any) {
+                setToastMessage(err.response?.data?.message || "Theres been an error fetching your booking history!");
+            }  
+        }
+        fetchHistory();
+    },[]);
 
     const filtered = useMemo (()=> {
         const q = query.toLowerCase();
-        return items.filter(it =>
-            it.dateLabel.toLowerCase().includes(q) || it.service.toLowerCase().includes(q)
+        return history.filter((it) =>
+            it.title.toLowerCase().includes(q) || it.date.toLowerCase().includes(q) || it.time.toLowerCase().includes(q)
         );
-    }, [query, items]);
+    }, [query, history]);
 
     return (
-    
         <div className="home">
             <NavbarButtons/>
             <h2 className="history_selection-title">History</h2>
-
+            
             <div className="history-search">
                 <input type="text" placeholder="Search..." value={query} onChange={(e) => setQuery(e.target.value)} />
             </div>
+            
+            {toastMessage && <div className="history-error">{toastMessage}</div>}
 
+            {filtered.length === 0 ? (
+                <div className="history-empty"> <p>You dont have no past history!</p></div>
+            ) : (
             <ul className="history-list"> {filtered.map((it) => (
-                <li key={it.id} className="history-item">
-                    <span className="history_item-date">{it.dateLabel}</span>
-                    <span className="history_item-service">{it.service}</span>
+                <li key={it._id} className="history-item">
+                    <span className="history_item-service">{it.title}</span>
+                    <span className="history_item-date">{new Date(it.date).toLocaleDateString()} - {it.time}</span>
                 </li>
                 ))}
             </ul>
+            )}
         </div>
     );
 }
