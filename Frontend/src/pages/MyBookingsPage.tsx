@@ -14,7 +14,8 @@ type Booking = {
 export default function MyBooking() {
 
     const [booking, setBookings] = useState<Booking[]>([]);
-    const [message, setMessage] = useState("");
+    const [toastMessage, setToastMessage] = useState<string | null>(null)
+
 
     useEffect(()=> {
         async function fetchBookings() {
@@ -22,12 +23,12 @@ export default function MyBooking() {
                 const res = await api.get("/bookings/upcoming");
                 setBookings(res.data);
             } catch (err: any) {
-                setMessage(err.response?.data?.message || "We couldnt fetch your bookings")
+                setToastMessage(err.response?.data?.message || "We couldnt fetch your bookings");
+                setTimeout(()=> setToastMessage(null), 3000);
             }
         }
         fetchBookings();
     }, []);
-
 
     async function handleCancelBooking(id: string) {
         if (!confirm("Are you sure you want to cancel this appointment")) return;
@@ -35,10 +36,12 @@ export default function MyBooking() {
         try {
             await api.delete(`/bookings/${id}`);
             setBookings((prev) => prev.filter((b) => b._id !== id));
-            setMessage("Your booking has been cancelled!")
+            setToastMessage("Your booking has been cancelled!")
+            setTimeout(()=> setToastMessage(null), 3000);
         } catch (err: any) {
             console.error(err);
-            setMessage(err.response?.data?.message || "We couldnt cancel your booking");
+            setToastMessage(err.response?.data?.message || "We couldnt cancel your booking");
+            setTimeout(()=> setToastMessage(null), 3000);
         }
     }
 
@@ -49,10 +52,10 @@ export default function MyBooking() {
 
                 <h2 className="booking_selection-title">My bookings</h2>
 
-                {message && <p className="booking-message">{message}</p>}
-
                 {booking.length === 0 ? (
-                    <div className="booking-empty"> You have no upcoming bookings!</div>
+                    <div className="booking-empty">
+                        <p>You have no upcoming bookings!</p>
+                    </div>
                 ) : (
                 <div className="booking-list">
                     {booking.map((b)=> (
@@ -68,6 +71,7 @@ export default function MyBooking() {
                         ))}
                     </div>
                 )}
+                {toastMessage && (<div className="toast">{toastMessage}</div>)}            
             </div>  
         </div>
     );

@@ -3,7 +3,7 @@
   padding:20px;
   border-radius: 70px;
   width: 90%;
-  margin: 40px auto 24px; 
+  margin: auto; 
 }
 
 .booking_selection-title{
@@ -12,8 +12,6 @@
   font-size: 35px;
   text-decoration: underline;
 }
-
-
 
 .booking-list {
   max-width: 520px;
@@ -47,14 +45,42 @@
   font-weight: bold;
   transition: background-color 0.3s ease;
   
-
     &:hover {
     background-color: #5a3df2;
   }
 }
 
+.booking-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 14px;
+  justify-items: center;
+  margin-bottom: 2rem;
+
+  p {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+}
+
+
 .booking-date, .booking-service {
   color: black;
   font-size: 20px;
   margin: 0 40px 0 40px; 
+}
+
+.toast {
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: black;
+  color: white;
+  padding: 20px 40px;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 10px;
 }

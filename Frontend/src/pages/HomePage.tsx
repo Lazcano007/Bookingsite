@@ -10,10 +10,10 @@ import { api } from "../api/axios";
 
 export default function HomePage() {
   const navigate = useNavigate();
-  const [message, setMessage] = useState("");
   const [expandedId, setExpandedId] = useState<string | null>(null); // Låter en services kort vara öppen åtgången 
   const [selectedDate, setSelectedDate] = useState<Date | null> (null)
   const [selectedTime, setSelectedTime] = useState<string | null> (null)
+  const [toastMessage, setToastMessage] = useState<string | null>(null)
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -35,8 +35,7 @@ export default function HomePage() {
         const selectedService = services.find((s) => s.id === expandedId)!;   
         
         const res = await api.post(
-          "/bookings",
-          {
+          "/bookings", {
             title: selectedService.title,
             price: selectedService.price,
             date: selectedDate!.toISOString(),
@@ -45,17 +44,19 @@ export default function HomePage() {
             headers: { Authorization: `Bearer ${token}`}
           },
         );
-        
-        setMessage(`Your booking is confirmed at ${selectedTime}`)
+
         console.log("booking cerated", res.data);
+        setToastMessage(`Your booking is confirmed at ${selectedTime}`)
+        setTimeout(()=> setToastMessage(null), 3000);
 
         setSelectedDate(null);
         setSelectedTime(null);
         setExpandedId(null);
         
       } catch (err: any) {
-            setMessage(err.response?.data?.message || "Theres been an eroor creating your booking");
-        }
+            setToastMessage(err.response?.data?.message || "Theres been an eroor creating your booking");
+            setTimeout(()=> setToastMessage(null), 3000);
+          }
 
   }
 
@@ -64,10 +65,9 @@ export default function HomePage() {
   return (
     <div className="home">
       <NavbarButtons />
-      <h2 className="home_selection-title">BOOK</h2>
 
-      {message && <p className="home-message">{message}</p>}
-
+    <h2 className="home_selection-title">BOOK</h2>
+      
       <div className="service-grid">
         {services.map((svc) => (
           <div key={svc.id} className="service-with-drawer">
@@ -103,6 +103,8 @@ export default function HomePage() {
           </div>
         ))}
       </div>
+      {toastMessage && (<div className="toast">{toastMessage}</div>
+    )}
     </div>
   );
 }
