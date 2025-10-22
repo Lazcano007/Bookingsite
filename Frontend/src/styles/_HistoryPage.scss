@@ -60,6 +60,15 @@
     box-shadow: 0 6px 16px rgba(0,0,0,.12);
 }
 
+.history-empty {
+    justify-items: center;
+    margin-bottom: 2rem;
+
+    p {
+        font-size: 20px;
+        font-weight: bold;
+    }
+}
 
 @media (max-width: 560px) {
     .history-item {
