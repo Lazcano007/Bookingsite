@@ -53,7 +53,8 @@ export const loginUser = async (req: Request, res: Response) => {
 export const getUserProfile = async (req: Request, res: Response) => {
     try {
         const user = (req as AuthenticatedRequest).user;
-        res.json(user);
+        
+        res.json(200).json({ name: user.name, email: user.email});
 
     }catch (error) {
         res.status(500).json({message: "Theres been a server error", error});
