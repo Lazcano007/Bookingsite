@@ -7,7 +7,7 @@ export interface IBooking extends Document {
     title: string;
     price: number;
     date: string;
-    time: String;
+    time: string;
     status: string;
 }
 

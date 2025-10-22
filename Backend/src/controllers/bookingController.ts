@@ -98,10 +98,10 @@ export const getBookingHistory = async (req:Request, res:Response ) => {
         
         const today = new Date();
         
-        const allBookings = await Booking.find({ userId: user._id, status:"active"})
-        const history = allBookings.filter(b => new Date(b.date) < today);
+        const history = await Booking.find({userId: user._id, status: "active", date:{$lt: today}}).sort({date: -1});
         res.status(200).json(history);
     }catch (error) {
+        console.error(error);
         res.status(500).json({message: "Theres been an error fetching your booking history", error});
     }
     
