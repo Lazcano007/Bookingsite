@@ -5,12 +5,12 @@ import generateToken from "../utils/generateToken";
 import { AuthenticatedRequest } from "../middlewares/authMiddleware";
 import Booking from "../models/bookingModel";  
 import mongoose from "mongoose";
+import { log } from "console";
 
 export const registerUser = async (req: Request, res: Response) => {
 
     try {
     const { name, email, password } = req.body;
-
     if (!name || !email || !password) {
         return res.status(400).json({ message: "You have to fill all the fields"});
     }
@@ -19,11 +19,10 @@ export const registerUser = async (req: Request, res: Response) => {
     if (userExists) {
         return res.status(400).json({ message: "This user already exists"});
     }
-
     const hashedPassword = await hashPassword(password);
     const newUser = await User.create({name, email, password: hashedPassword});
 
-    res.status(201).json({_id: newUser._id, name: newUser.name, email: newUser.email, token: generateToken((newUser._id as string).toString())});
+    res.status(201).json({_id: newUser._id, name: newUser.name, email: newUser.email, role: newUser.role, token: generateToken((newUser._id as string).toString(), newUser.role)});
     } catch (error) {
         res.status(500).json({message: "Theres been a server error", error});
     }
@@ -34,8 +33,7 @@ export const registerUser = async (req: Request, res: Response) => {
 export const loginUser = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
-
-        const user = await User.findOne({ email})
+        const user = await User.findOne({ email});
         if(!user) {
             return res.status(400).json({message: "Wrong email or password"});
         }
@@ -44,7 +42,20 @@ export const loginUser = async (req: Request, res: Response) => {
         if (!isCorrectPassword) {
             return res.status(400).json({message: "Wrong email or password"});
         }
-        res.status(200).json({_id: user._id, name: user.name, email: user.email, token: generateToken((user._id as string).toString())});
+        console.log("🎯 USER FROM DB:", user);
+        console.log("🎯 USER ROLE VALUE:", user.role);
+        
+        const userObj = user.toObject();
+        const loginResponse = {
+            _id: userObj._id, 
+            name: userObj.name, 
+            email: userObj.email, 
+            role: userObj.role, 
+            token: generateToken((userObj._id as string).toString(),userObj.role)
+        };
+        
+        res.status(200).json(loginResponse);
+        // res.status(200).json({_id: user._id, name: user.name, email: user.email, role: user.role, token: generateToken((user._id as string).toString(),user.role)})
     } catch (error) {
         res.status(500).json({message: "Theres been a server error", error});
     }
@@ -54,7 +65,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
     try {
         const user = (req as AuthenticatedRequest).user;
         
-        res.json(200).json({ name: user.name, email: user.email});
+        res.status(200).json({ name: user.name, email: user.email, role: user.role});
 
     }catch (error) {
         res.status(500).json({message: "Theres been a server error", error});
@@ -76,13 +87,11 @@ export const getAllUser = async (req: Request, res:Response ) => {
 
 export const updateUser = async (req:Request, res:Response) => {
     try {
-
         const {id} = req.params;
         const {name} = req.body;
         if(!name) {
             return res.status(400).json({message: "You have to write a new name"})
         }
-
         const updatedUser = await User.findByIdAndUpdate(id, {name}, {new: true, select: "-password"});
         if(!updatedUser) {
             return res.status(404).json({message: "This user is not found"});
@@ -104,7 +113,7 @@ export const deleteUser = async (req:Request, res: Response) => {
         }
 
         const deletedBookings = await Booking.deleteMany({userId: new mongoose.Types.ObjectId(id)});
-        res.status(200).json({message: "You successfully deleted this user and their bookings", deletedUser, deletedBookingsCount: deletedBookings?.deletedCount ?? 0})
+        res.status(200).json({message: `You successfully deleted ${deletedUser.name} and ${deletedBookings.deletedCount} related bookings!`, deletedUser: {id: deletedUser._id, email: deletedUser.email}})
     }catch (error) {
         return res.status(500).json({message: "Theres been an error deleting user"})
     }

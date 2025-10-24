@@ -23,13 +23,14 @@ export const protect = async (req: AuthenticatedRequest, res: Response, next: Ne
         if (!secret) {
             return res.status(401).json({ message: "JWT sercret is not set"});
         }
-        const decoded = jwt.verify(token, secret) as { id: string };
+        const decoded = jwt.verify(token, secret) as { id: string, role: string };
 
-        const user = await User.findById(decoded.id).select("-password");
+        const user = await User.findById(decoded.id).select("name email role").lean();
         if(!user) {
             return res.status(401).json({message: "user not found"});
         }
         req.user = user;
+        req.user.role = decoded.role || user.role;
         next();
     } catch (error) {
         return res.status(401).json({message: "You are not authorized, token failed"});

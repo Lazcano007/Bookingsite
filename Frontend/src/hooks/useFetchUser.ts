@@ -3,7 +3,7 @@ import { api } from "../api/axios";
 
 
 export function useFetchUser() {
-    const [user, setUser] = useState<{name?: string; email?: string } | null>(null);
+    const [user, setUser] = useState<{name?: string; email?: string; role: string; } | null>(null);
     const [loading, setLoading] = useState(true);
 
 
