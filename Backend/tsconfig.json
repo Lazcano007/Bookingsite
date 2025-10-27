@@ -17,6 +17,6 @@
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true
   },
-  "include": ["src"],
+  "include": ["src", "fixRoute.js"],
   "exclude": ["node_modules", "dist"]
 }
