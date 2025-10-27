@@ -75,7 +75,7 @@ export const getUserById = async (req: Request, res: Response) => {
 
 export const getAllUser = async (req: Request, res:Response ) => {
     try{
-        const users = await User.find({}, "-password") //den tar itne med lösenordet
+        const users = await User.find({ role: { $ne:"admin"}}).select("-password") //den tar itne med lösenordet och $ne betyder "inte lika med" alltså att den hämtar alla användarer som inte är admin
         res.status(200).json(users);
     }catch(error) {
         return res.status(500).json({message: "Theres beena an error fetching all user"})
