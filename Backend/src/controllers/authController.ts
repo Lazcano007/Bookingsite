@@ -8,7 +8,6 @@ import mongoose from "mongoose";
 
 
 export const registerUser = async (req: Request, res: Response) => {
-
     try {
     const { name, email, password } = req.body;
     if (!name || !email || !password) {
@@ -112,5 +111,25 @@ export const deleteUser = async (req:Request, res: Response) => {
         res.status(200).json({message: `You successfully deleted ${deletedUser.name} and ${deletedBookings.deletedCount} related bookings!`, deletedUser: {id: deletedUser._id, email: deletedUser.email}})
     }catch (error) {
         return res.status(500).json({message: "Theres been an error deleting user"})
+    }
+}
+
+export const createUserByAdmin = async (req: Request, res: Response) => {
+    try { 
+        const { name, email, password } = req.body;
+        if (!name || !email || !password) {
+            return res.status(400).json({ message: "You have to fill all the fields!"});
+        }
+
+        const userExists = await User.findOne({email});
+        if (userExists) {
+            return res.status(400).json({ message: "This user already exists!"});
+        }
+        const hashedPassword = await hashPassword(password);
+        const newUser = await User.create({name, email, password: hashedPassword});
+
+        res.status(201).json({message: "This user has been successfully created!", newUser});
+    } catch (error) {
+        res.status(500).json({message: "Thers been an error creating this user!", error})
     }
 }

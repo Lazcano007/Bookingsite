@@ -25,7 +25,6 @@ export const createBooking = async (req: Request, res: Response) => {
 
 };
 
-
 // Hämtar alla bokningar för usern som är inloggad
 export const getUserBookings = async (req: Request, res: Response) => {
     try{
@@ -80,7 +79,7 @@ export const getUpcomingBooking = async (req:Request, res:Response ) => {
         
         const allBookings = await Booking.find({ userId: user._id, status: "active"});
         const upcoming = allBookings.filter(b=> new Date(b.date) >= today);
-
+        
         upcoming.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
         
         res.status(200).json(upcoming);
