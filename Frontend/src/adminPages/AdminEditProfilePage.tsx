@@ -1,39 +1,70 @@
 import NavbarButtons from "../components/NavbarButtons"
 import "../styles/_AdminEditProfilePage.scss"
 import { useParams, useNavigate } from "react-router-dom";
+import { api } from "../api/axios";
+import { useEffect, useState } from "react";
 
+type Profile = {
+    _id: string;
+    name: string;
+};
 
 export default function _AdminEditPage() {
 
     const {id} = useParams();
     const navigate = useNavigate();
+    const [profile, setProfile] = useState<Profile | null>(null)
+    const [name, setName] =  useState("");
+    const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-    const fakeData = [
-        {id: "1", name: "Pedro"},
-        {id: "2", name: "Julia"},
-        {id: "3", name: "Gabriel"},
-        {id: "4", name: "Clara"},
-        ];
-    
-        const profile = fakeData.find((p) => p.id === id);
-        if (!profile) {
-            return <p style={{ textAlign: "center", color: "white" }}>Profile not found</p>;
+    useEffect(() => {
+        const fetchProfile = async () => {
+        try {
+            const res = await api.get(`/admin/profiles/${id}`);
+            setProfile(res.data);
+            setName(res.data.name);
+        } catch (err: any) {
+            setToastMessage ( err.response?.data?.message || "Therws been a problem fetching this profile!");
         }
+    };
+    fetchProfile();
+    }, [id]);
 
+    const handleDelete = async () => {
+        if(!confirm("Are you sure you want to delete this user?")) 
+            return;
+        try {
+            await api.delete(`/admin/profiles/${id}`);
+            navigate("/admin/profiles");
+        } catch (err: any) {
+            setToastMessage (err.response?.data?.message || "Theres been a problem deleting this profile!");
+        }
+    };
+
+    const handleSave = async () => {
+        try {
+            await api.put(`/admin/profiles/${id}`, {name});
+            navigate("/admin/profiles");
+        } catch (err: any) {
+            setToastMessage(err.response?.data?.message || "Theres been an error saving this profile!");
+        }
+    };
 
     return (
         <div className="home">
             <NavbarButtons />
-            <h2 className="adminEditPage_selection-title">Profiles</h2>
+            <h2 className="adminEditPage_selection-title">Profiles: {profile?.name}</h2>
+
+            {toastMessage && <p className="toast">{toastMessage}</p>}
 
             <div className="adminEdit-card">
                 <div className="adminEdit-inner">
-                    <button className="delete-btn" onClick={() => {navigate("/admin/profiles"); alert("Deleted (Fake)")}}>DELETE</button>
+                    <button className="delete-btn" onClick={handleDelete}>DELETE</button>
                     <label className="adminEdit-label">Name:</label>
-                    <input type="text" defaultValue={profile.name} className="adminEdit-input"/>
-                    <button className="save-btn" onClick={() => {navigate("/admin/profiles"); alert ("User updated (Fake)")}}>SAVE</button>
+                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="adminEdit-input"/>
+                    <button className="save-btn" onClick={handleSave}>SAVE</button>
                 </div>
             </div>
         </div>
-    )
+    );
 }
