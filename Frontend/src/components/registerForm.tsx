@@ -10,39 +10,42 @@ type RegisterFormProps = {
   isAdmin?: boolean;
 };
 
-export default function RegisterForm({ isAdmin}: RegisterFormProps)  {
+export default function RegisterForm({ isAdmin = false}: RegisterFormProps)  {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const [toastMessage, setToastMessage] = useState("");
   const navigate = useNavigate();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     if(password !== confirmPassword) {
-      setMessage("Your passwords do not match!");
+      setToastMessage("Your passwords do not match!");
       return;
     }
 
     try {
-        const res = await api.post("/auth/register", {name, email, password});
-        
-        console.log("Backend response:", res.data);
-        localStorage.setItem("token", res.data.token);
-
-        setMessage("You can now log in!")
-
-        if (isAdmin) {
-          navigate("/admin/profiles");
-        } else {
-          navigate("/login");
+        if(isAdmin) {
+          await api.post("/admin/profiles", {name, email, password});
+          setToastMessage("This user has been successfully created!");
+          setName("")
+          setEmail("")
+          setPassword("")
+          setConfirmPassword("")
+          setTimeout(() => navigate("/admin/profiles"), 1500);
+          return;
         }
+
+        const res = await api.post("/auth/register", {name, email, password});
+        localStorage.setItem("token", res.data.token);
+        setToastMessage("You can now log in!")
+        setTimeout(() => navigate("/login"), 1500);
+
     }catch (err: any) {
-      setMessage(err.response?.data?.message || "Theres been an error, with your registration!");
+      setToastMessage(err.response?.data?.message || "Theres been an error, with your registration!");
     }
-  
   }
 
   return (
@@ -67,12 +70,12 @@ export default function RegisterForm({ isAdmin}: RegisterFormProps)  {
 
         <div className="form-group">
           <label>Email address</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@example.com" required/>
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="John@example.com" required/>
         </div>
 
         <Button type="submit">{isAdmin ? "ADD" : "Register"} </Button>
 
-        {message && <p className="register-message">{message}</p>}
+        {toastMessage && <p className="register-message">{toastMessage}</p>}
 
         {!isAdmin && (
           <> 
