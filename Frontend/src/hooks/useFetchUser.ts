@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/axios";
 
-
 export function useFetchUser() {
     const [user, setUser] = useState<{name?: string; email?: string; role: string; } | null>(null);
     const [loading, setLoading] = useState(true);
 
-
     useEffect(() => {
-
         api.get("/auth/profile")
         .then((res) => setUser(res.data))
         .catch(() => { 
@@ -17,6 +14,5 @@ export function useFetchUser() {
         })
         .finally(()=>setLoading(false));
     }, [])
-        return { user, loading};
-
+        return {user, loading};
 }
