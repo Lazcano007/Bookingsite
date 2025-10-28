@@ -11,7 +11,7 @@ import Profile from "./pages/ProfilePage";
 import AdminDashboardBookingPage from "./adminPages/AdminDashboardBookingPage";
 import AdminProfilesPage from "./adminPages/AdminProfilesPage";
 import AdminEditProfilePage from "./adminPages/AdminEditProfilePage";
-import AdminAddProfilePage from "./adminPages/_AdminAddProfilePage";
+import AdminAddProfilePage from "./adminPages/AdminAddProfilePage";
 
 
 export default function App() {
