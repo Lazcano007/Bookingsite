@@ -20,13 +20,7 @@ export default function LoginForm() {
     
         try{
             const res = await api.post("/auth/login", {email, password});
-            console.log("RAW RESPONSE OBJECT:", res);
-            console.log("RAW RESPONSE TEXT:", res.request?.responseText);
-            console.log("PARSED RES.DATA:", res.data);
-            console.log("DATA KEYS:", Object.keys(res.data));
-            console.log("ROLE VALUE:", res.data.role);
-            console.log("Type of role:", typeof res.data.role);
-            
+
             localStorage.setItem("token", res.data.token);    //sparar JWT-token i localstorage
             localStorage.setItem("role", res.data.role);
             localStorage.setItem("userId", res.data._id);
