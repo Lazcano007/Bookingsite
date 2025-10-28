@@ -9,12 +9,8 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-
-
 app.use( cors ({ origin: "*" }));
-
 app.use(express.json());
-
 app.use('/api', router);
 
 app.get("/", (req, res) => {
@@ -22,7 +18,6 @@ app.get("/", (req, res) => {
 });
 
 connectDB();
-
 app.listen(PORT, async () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });
