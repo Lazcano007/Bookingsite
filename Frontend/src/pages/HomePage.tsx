@@ -45,7 +45,6 @@ export default function HomePage() {
           },
         );
 
-        console.log("booking cerated", res.data);
         setToastMessage(`Your booking is confirmed at ${selectedTime}`)
         setTimeout(()=> setToastMessage(null), 3000);
 
