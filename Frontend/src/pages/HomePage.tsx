@@ -33,7 +33,6 @@ export default function HomePage() {
       try {
         const token = localStorage.getItem("token");
         const selectedService = services.find((s) => s.id === expandedId)!;   
-        
         const res = await api.post(
           "/bookings", {
             title: selectedService.title,
@@ -45,21 +44,16 @@ export default function HomePage() {
           },
         );
 
-        setToastMessage(`Your booking is confirmed at ${selectedTime}`)
+        setToastMessage(res.data.message || `Your booking is confirmed at ${selectedTime}`)
         setTimeout(()=> setToastMessage(null), 3000);
-
         setSelectedDate(null);
         setSelectedTime(null);
         setExpandedId(null);
-        
       } catch (err: any) {
             setToastMessage(err.response?.data?.message || "Theres been an eroor creating your booking");
             setTimeout(()=> setToastMessage(null), 3000);
           }
-
   }
-
-
 
   return (
     <div className="home">
