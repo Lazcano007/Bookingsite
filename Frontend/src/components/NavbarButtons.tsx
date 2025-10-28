@@ -4,7 +4,6 @@ import { useFetchUser } from "../hooks/useFetchUser";
 
 
 export default function NavbarButtons() {
-
     const navigate = useNavigate();
     const location = useLocation();
     const { user, loading } = useFetchUser();
@@ -15,12 +14,20 @@ export default function NavbarButtons() {
     
 }
 
-    const navItems = [
+    let navItems = [
         { label: "BOOK", to: "/" },
         { label: "MY BOOKINGS", to: "/bookings" },
         { label: "HISTORY", to: "/history" },
         { label: "PROFILE", to: "/profile" },
     ];
+
+    if(user?.role === "admin") {
+        navItems = [
+            {label: "MY BOOKINGS", to: "bookings"},
+            {label: "HISTORY", to: "history"},
+            {label: "PROFILES", to: "/admin/profiles"},
+        ];
+    }
 
         return (
             <div className="navbar-wrapper">
@@ -29,6 +36,7 @@ export default function NavbarButtons() {
                     <Link key={item.to} to={item.to} className={`navbtn ${location.pathname === item.to ? "navbtn--active" : ""}`}> {item.label}</Link>
                 ))}
 
+                
                 {!loading && user && (
                     <>
                     <button className="logout-btn" onClick={handleLogout}>LOG OUT</button>
