@@ -6,10 +6,8 @@ export interface AuthenticatedRequest extends Request {
     user?: any;
 }
 
-
 export const protect = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     let token;
-
     if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
         token = req.headers.authorization.split(' ')[1];
     }    
@@ -23,8 +21,8 @@ export const protect = async (req: AuthenticatedRequest, res: Response, next: Ne
         if (!secret) {
             return res.status(401).json({ message: "JWT sercret is not set"});
         }
-        const decoded = jwt.verify(token, secret) as { id: string, role: string };
 
+        const decoded = jwt.verify(token, secret) as { id: string, role: string };
         const user = await User.findById(decoded.id).select("name email role").lean();
         if(!user) {
             return res.status(401).json({message: "user not found"});
@@ -33,15 +31,14 @@ export const protect = async (req: AuthenticatedRequest, res: Response, next: Ne
         req.user.role = decoded.role || user.role;
         next();
     } catch (error) {
-        return res.status(401).json({message: "You are not authorized, token failed"});
+        res.status(401).json({message: "You are not authorized, token failed", error});
     }
 }
-
 
 export const isAdmin = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     if(req.user && req.user.role ==="admin") {
         next();
     }else {
-        res.status(403).json({message: "This is only for admin"});
+        res.status(403).json({message: "This is only for admin!"});
     }
 }

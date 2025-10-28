@@ -34,7 +34,7 @@ export const loginUser = async (req: Request, res: Response) => {
         const { email, password } = req.body;
         const user = await User.findOne({ email});
         if(!user) {
-            return res.status(400).json({message: "Wrong email or password"});
+            return res.status(401).json({message: "Wrong email or password"});
         }
         const isCorrectPassword = await verifyPassword(password, user.password);
         if (!isCorrectPassword) {
@@ -42,7 +42,7 @@ export const loginUser = async (req: Request, res: Response) => {
         }
         res.status(200).json({_id: user._id, name: user.name, email: user.email, role: user.role, token: generateToken((user._id as string).toString(),user.role)})
     } catch (error) {
-        res.status(500).json({message: "Theres been a server error", error});
+        res.status(500).json({message: "Theres been a server error!"});
     }
 };
 
@@ -53,7 +53,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
         res.status(200).json({ name: user.name, email: user.email, role: user.role});
 
     }catch (error) {
-        res.status(500).json({message: "Theres been a server error", error});
+        res.status(500).json({message: "Theres been a server error!", error});
     }
 }
 
@@ -66,7 +66,7 @@ export const getUserById = async (req: Request, res: Response) => {
         if(!getUser) {
             return res.status(404).json({message: "This user is not found!"})
         }
-        return res.status(200).json(getUser)
+        res.status(200).json(getUser)
     } catch (error) {
         res.status(500).json({message: "Theres been an error fetching this user!", error});
     }
@@ -77,7 +77,7 @@ export const getAllUser = async (req: Request, res:Response ) => {
         const users = await User.find({ role: { $ne:"admin"}}).select("-password") //den tar itne med lösenordet och $ne betyder "inte lika med" alltså att den hämtar alla användarer som inte är admin
         res.status(200).json(users);
     }catch(error) {
-        return res.status(500).json({message: "Theres beena an error fetching all user"})
+        res.status(500).json({message: "Theres beena an error fetching all user", error})
     }
 };
 
@@ -95,7 +95,7 @@ export const updateUser = async (req:Request, res:Response) => {
         res.status(200).json({message: "This user has been successfilly updated", user: updatedUser})
 
     } catch(error) {
-        return res.status(500).json({message: "Theres been an error fetching all user"})
+        res.status(500).json({message: "Theres been an error fetching all user!", error})
     }
 }
 
@@ -110,7 +110,7 @@ export const deleteUser = async (req:Request, res: Response) => {
         const deletedBookings = await Booking.deleteMany({userId: new mongoose.Types.ObjectId(id)});
         res.status(200).json({message: `You successfully deleted ${deletedUser.name} and ${deletedBookings.deletedCount} related bookings!`, deletedUser: {id: deletedUser._id, email: deletedUser.email}})
     }catch (error) {
-        return res.status(500).json({message: "Theres been an error deleting user"})
+        res.status(500).json({message: "Theres been an error deleting user", error})
     }
 }
 
@@ -126,10 +126,11 @@ export const createUserByAdmin = async (req: Request, res: Response) => {
             return res.status(400).json({ message: "This user already exists!"});
         }
         const hashedPassword = await hashPassword(password);
-        const newUser = await User.create({name, email, password: hashedPassword});
+        const newUser = await User.create({name, email, password: hashedPassword, role: "user"});
 
-        res.status(201).json({message: "This user has been successfully created!", newUser});
+        res.status(201).json({ message: "This user has been successfully crated by an admin!", newUser: {_id: newUser._id, name: newUser.name, email: newUser.email, role: newUser.role}});
+
     } catch (error) {
-        res.status(500).json({message: "Thers been an error creating this user!", error})
+        res.status(500).json({message: "Theres been an error creating this user!", error})
     }
 }
