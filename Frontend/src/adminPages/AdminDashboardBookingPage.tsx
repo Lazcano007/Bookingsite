@@ -1,41 +1,58 @@
+import { useEffect, useState } from "react";
 import NavbarButtons from "../components/NavbarButtons";
 import "../styles/_AdminDashboardBookingPage.scss";
+import { api } from "../api/axios";
 
-
-type HistoryItem = {
-    id:string;
-    dateLabel: string;
-    service: string;
+type Booking = {
+    _id:string;
+    userId: {name: string; email: string};
+    title: string;
+    date: string;
+    time: string;
+    status: string;
 };
 
-
-
-
 export default function AdminDashboardBookingPage() {
+    const [booking, setBookings] = useState<Booking[]>([]);
+    const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-    
-        const items: HistoryItem[] = [
-            { id: "1", dateLabel: "Wednesday 20 aug kl 13:30", service: "Kids’ haircut (6–12 years)" },
-            { id: "2", dateLabel: "Monday 13 sep kl 11:00", service: "Men’s haircut" },
-            { id: "3", dateLabel: "Friday 2 dec kl 18:30", service: "Beard trim / Wet shave)"},
-            { id: "4", dateLabel: "Wednesday 11 feb kl 10:00", service: "Women’s haircut"},
-            
-        ];
-    
+    useEffect(() => {
+        const fetchBookings = async() => {
+            try {
+                const token = localStorage.getItem("token");
+                const res = await api.get("/admin/bookings", {
+                    headers: { Authorization: `Bearer ${token}`}
+                });
+
+                const today = new Date();
+                const upcoming = res.data.filter((b: Booking) => {
+                    return new Date(b.date) >= today && b.status === "active"});
+                upcoming.sort((a: Booking, b: Booking) => new Date(a.date).getTime() - new Date(b.date).getTime());
+                setBookings(upcoming);
+            } catch (err: any) {
+                setToastMessage(err.response?.data?.message || "Theres been a problem fetching all the bookings!");
+            }
+        };
+        fetchBookings();
+        }, []);
 
     return (
         <div className="home">
             <NavbarButtons />
             <h2 className="adminDashboardbooking_selection-title">Upcoming Appointments</h2>
 
-            <ul className="history-list"> {items.map((it) => (
-                <li key={it.id} className="admin_booking-item">
-                    <span className="admin_booking-date">{it.dateLabel}</span>
-                    <span className="admin_booking-service">{it.service}</span>
-                </li>
-                ))}
+            {toastMessage && <p className="toast">{toastMessage}</p>}
+            <ul className="history-list"> 
+                {booking.length > 0 ? (
+                    booking.map((b) => (
+                        <li key={b._id} className="admin_booking-item">
+                            <span className="admin_booking-date"> {new Date(b.date).toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "short"})}{""} - kl {b.time}</span>
+                            <span className="admin_booking-service">{b.title}</span>
+                            <span className="admin_booking-user">{b.userId.name}</span>
+                        </li>
+                    ))
+                ):( <p className="no-users">No upcoming bookings found!</p>)}
             </ul>
-
         </div>
-    )
+    );
 }
