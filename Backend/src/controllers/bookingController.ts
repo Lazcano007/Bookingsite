@@ -14,7 +14,7 @@ export const createBooking = async (req: Request, res: Response) => {
             return res.status(400).json({ message: "This time on this date is already booked" });
         };
         const newBooking = await Booking.create({ userId: user._id, title, price, date, time});
-        res.status(201).json({message: "booking created successfuly", booking: newBooking});
+        res.status(201).json({message: "Your booking was created successfuly", booking: newBooking});
     } catch (error) {
         res.status(500).json({message: "Theres been an error with your booking creation", error});
     }
