@@ -4,7 +4,6 @@
     border-radius: 70px;
     width: 90%;
     margin: auto;
-
 }
 
 .adminEditPage_selection-title{
@@ -13,7 +12,6 @@
     font-size: 35px;
     text-decoration: underline;
 }
-
 
 .adminEdit-card{
     background: white;
@@ -49,12 +47,10 @@
     font-size: 15px;
     transition: 0.3s ease;
     
-
     &:hover {
         background-color: #b90f06;
     }
 }
-
 
 .adminEdit-label {
     display: grid;
@@ -62,7 +58,6 @@
     color:black;
     font-weight: bold;
 }
-
 
 .adminEdit-input {
     padding: 10px;
@@ -86,7 +81,6 @@
         background-color: #5a3df2;
     }
 }
-
 
 @media (max-width: 560px) {
     .adminEdit-card {

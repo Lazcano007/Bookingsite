@@ -1,7 +1,6 @@
 import "../styles/_ServiceCard.scss";
 import BookButton from "./BookButton";
 
-
 export type Service = {
     id:string;
     title: string;
@@ -14,10 +13,8 @@ type ServiceCard = {
     onSelect?: (service: Service) => void;
 }
 
-
 export default function ServiceCard({service, onSelect }: ServiceCard) {
     const {title, price} = service;
-
 
     return (
         <div className ="service-card" role = "group" >
@@ -25,7 +22,6 @@ export default function ServiceCard({service, onSelect }: ServiceCard) {
             <p className="service-card_price">{price} kr</p>
 
             <BookButton onClick={() => onSelect?.(service)} />
-
         </div>
     )
 }

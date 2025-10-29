@@ -7,5 +7,4 @@ export default function OrSeparator() {
         <span>OR</span>
         </div>
     )
-
 }
