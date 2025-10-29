@@ -6,7 +6,6 @@ import { AuthenticatedRequest } from "../middlewares/authMiddleware";
 import Booking from "../models/bookingModel";  
 import mongoose from "mongoose";
 
-
 export const registerUser = async (req: Request, res: Response) => {
     try {
     const { name, email, password } = req.body;
@@ -20,14 +19,11 @@ export const registerUser = async (req: Request, res: Response) => {
     }
     const hashedPassword = await hashPassword(password);
     const newUser = await User.create({name, email, password: hashedPassword});
-
     res.status(201).json({_id: newUser._id, name: newUser.name, email: newUser.email, role: newUser.role, token: generateToken((newUser._id as string).toString(), newUser.role)});
     } catch (error) {
         res.status(500).json({message: "Theres been a server error", error});
     }
 };
-
-
 
 export const loginUser = async (req: Request, res: Response) => {
     try {
@@ -36,6 +32,7 @@ export const loginUser = async (req: Request, res: Response) => {
         if(!user) {
             return res.status(401).json({message: "Wrong email or password"});
         }
+
         const isCorrectPassword = await verifyPassword(password, user.password);
         if (!isCorrectPassword) {
             return res.status(400).json({message: "Wrong email or password"});
@@ -49,14 +46,11 @@ export const loginUser = async (req: Request, res: Response) => {
 export const getUserProfile = async (req: Request, res: Response) => {
     try {
         const user = (req as AuthenticatedRequest).user;
-        
         res.status(200).json({ name: user.name, email: user.email, role: user.role});
-
     }catch (error) {
         res.status(500).json({message: "Theres been a server error!", error});
     }
 }
-
 
 //--------ADMIN----------
 
@@ -88,12 +82,12 @@ export const updateUser = async (req:Request, res:Response) => {
         if(!name) {
             return res.status(400).json({message: "You have to write a new name"})
         }
+
         const updatedUser = await User.findByIdAndUpdate(id, {name}, {new: true, select: "-password"});
         if(!updatedUser) {
             return res.status(404).json({message: "This user is not found"});
         }
         res.status(200).json({message: "This user has been successfilly updated", user: updatedUser})
-
     } catch(error) {
         res.status(500).json({message: "Theres been an error fetching all user!", error})
     }
@@ -127,10 +121,17 @@ export const createUserByAdmin = async (req: Request, res: Response) => {
         }
         const hashedPassword = await hashPassword(password);
         const newUser = await User.create({name, email, password: hashedPassword, role: "user"});
-
         res.status(201).json({ message: "This user has been successfully crated by an admin!", newUser: {_id: newUser._id, name: newUser.name, email: newUser.email, role: newUser.role}});
-
     } catch (error) {
         res.status(500).json({message: "Theres been an error creating this user!", error})
+    }
+}
+
+export const getAllBookings = async (req: Request, res: Response) =>  {
+    try {
+        const bookings = await Booking.find().populate("userId", "name email");
+        res.status(200).json(bookings);
+    }catch (error) {
+        res.status(500).json({message: "Theres been an error fetching all bookings", error});
     }
 }

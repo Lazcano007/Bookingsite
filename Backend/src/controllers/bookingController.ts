@@ -18,10 +18,8 @@ export const createBooking = async (req: Request, res: Response) => {
     } catch (error) {
         res.status(500).json({message: "Theres been an error with your booking creation", error});
     }
-
 };
 
-// Hämtar alla bokningar för usern som är inloggad
 export const getUserBookings = async (req: Request, res: Response) => {
     try{
         const user = (req as AuthenticatedRequest).user;
@@ -92,17 +90,4 @@ export const getBookingHistory = async (req:Request, res:Response ) => {
         res.status(500).json({message: "Theres been an error fetching your booking history", error});
     }
     
-}
-
-
-//-------ADMIN----------
-
-// Hämtar alla bokingar för ADMIN 
-export const getAllBookings = async (req: Request, res: Response) =>  {
-    try {
-        const bookings = await Booking.find().populate("userId", "name email");
-        res.status(200).json(bookings);
-    }catch (error) {
-        res.status(500).json({message: "Theres been an error fetching all bookings", error});
-    }
 }
