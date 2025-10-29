@@ -4,7 +4,6 @@
     border-radius: 70px;
     width: 90%;
     margin: auto;
-
 }
 
 .adminDashboardbooking_selection-title {
@@ -14,7 +13,6 @@
     text-decoration: underline;
 }
 
-
 .admin_booking-list {
     list-style: none;
     padding: 0;
@@ -23,7 +21,6 @@
     display: grid;
     gap: 15px;
 }
-
 
 .admin_booking-item {
     background: white;
@@ -37,21 +34,17 @@
     box-shadow: 0 6px 16px rgba(0,0,0,.12);
 }
 
+p {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
 
 @media (max-width: 560px) {
     .admin_booking-item {
         grid-template-columns: 1fr;
         text-align: center;
-        row-gap: 6px;
-    }
-
-    .admin_booking-list {
-        list-style: none;
-        align-items: center; 
-        padding: 1rem;
-        margin: 1rem auto;
-        width: max(300px);
-        display: grid;
-        gap: 1.5rem;
+        gap: 6px;
     }
 }
