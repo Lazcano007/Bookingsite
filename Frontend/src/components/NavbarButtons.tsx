@@ -23,8 +23,8 @@ export default function NavbarButtons() {
 
     if(user?.role === "admin") {
         navItems = [
-            {label: "MY BOOKINGS", to: "bookings"},
-            {label: "HISTORY", to: "history"},
+            {label: "MY BOOKINGS", to: "/admin/bookings"},
+            {label: "HISTORY", to: "/history"},
             {label: "PROFILES", to: "/admin/profiles"},
         ];
     }
