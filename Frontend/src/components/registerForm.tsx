@@ -5,7 +5,6 @@ import OrSeparator from "./OrSeparator";
 import {useNavigate, Link} from "react-router-dom";
 import { api } from "../api/axios";
 
-
 type RegisterFormProps = {
   isAdmin?: boolean;
 };
@@ -75,7 +74,7 @@ export default function RegisterForm({ isAdmin = false}: RegisterFormProps)  {
 
         <Button type="submit">{isAdmin ? "ADD" : "Register"} </Button>
 
-        {toastMessage && <p className="register-message">{toastMessage}</p>}
+        {toastMessage && <p className="toast-message">{toastMessage}</p>}
 
         {!isAdmin && (
           <> 
