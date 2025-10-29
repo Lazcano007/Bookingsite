@@ -20,11 +20,10 @@ export default function LoginForm() {
     
         try{
             const res = await api.post("/auth/login", {email, password});
-
+            console.log("LOGIN RESPONSE:", res.data);
             localStorage.setItem("token", res.data.token);    //sparar JWT-token i localstorage
             localStorage.setItem("role", res.data.role);
             localStorage.setItem("userId", res.data._id);
-            
             setMessage("Welcome to Fresh Line Barber");
             
             if(res.data.role === "admin") {
