@@ -31,7 +31,11 @@ export default function LoginForm() {
                 setTimeout(() => {
                     navigate("/admin/bookings");
                 }, 300)
-            }
+            } else {
+            setTimeout(()=> {
+                navigate("/");
+            }, 300);
+        }
         }catch (err: any) {
             setMessage(err.response?.data?.message || "You wrote wrong email or password!");
         } finally {
