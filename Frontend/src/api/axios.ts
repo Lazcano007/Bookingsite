@@ -11,7 +11,6 @@ export const api = axios.create({
     },
 });
 
-
 api.interceptors.request.use((config) => {       // detta skickar jwt automatisk till alla request 
     const token = localStorage.getItem("token");
     if(token) {
