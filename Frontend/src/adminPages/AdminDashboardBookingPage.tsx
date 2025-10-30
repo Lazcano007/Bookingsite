@@ -46,9 +46,8 @@ export default function AdminDashboardBookingPage() {
                 {booking.length > 0 ? (
                     booking.map((b) => (
                         <li key={b._id} className="admin_booking-item">
+                            <span className="admin_booking-service"><strong>{b.userId.name} </strong> - {b.title}</span>
                             <span className="admin_booking-date"> {new Date(b.date).toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "short"})}{""} - kl {b.time}</span>
-                            <span className="admin_booking-service">{b.title}</span>
-                            <span className="admin_booking-user">{b.userId.name}</span>
                         </li>
                     ))
                 ):( <p className="no-users">No upcoming bookings found!</p>)}

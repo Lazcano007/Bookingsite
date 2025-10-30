@@ -12,7 +12,7 @@ import AdminDashboardBookingPage from "./adminPages/AdminDashboardBookingPage";
 import AdminProfilesPage from "./adminPages/AdminProfilesPage";
 import AdminEditProfilePage from "./adminPages/AdminEditProfilePage";
 import AdminAddProfilePage from "./adminPages/AdminAddProfilePage";
-
+import AdminHistoryPage from "./adminPages/AdminHistoryPage";
 
 export default function App() {
   const token = localStorage.getItem("token");
@@ -30,10 +30,10 @@ export default function App() {
 
             {/* Admin routes */}
             <Route path="/admin/bookings" element={<AdminDashboardBookingPage />} />
+            <Route path="/admin/history" element={<AdminHistoryPage />} />
             <Route path="/admin/profiles" element={<AdminProfilesPage />} />
             <Route path="/admin/profile/:id" element={<AdminEditProfilePage />} />
             <Route path="/admin/add-profile" element={<AdminAddProfilePage />}  />
-            
           </Routes>
     </BrowserRouter>
   );

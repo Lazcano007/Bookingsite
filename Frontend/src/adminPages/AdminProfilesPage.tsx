@@ -25,10 +25,8 @@ export default function AdminProfilesPage() {
         };
         fetchProfiles();
     }, []);
-
     
     return (
-
         <div className="home">
             <NavbarButtons />
 
