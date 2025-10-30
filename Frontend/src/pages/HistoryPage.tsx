@@ -7,12 +7,10 @@ type HistoryItem = {
     _id:string;
     title: string;
     date: string;
-    time: string;
-    price: string;
-};
+    time: string;};
 
 export default function HistoryPage() {
-    const [query, setQuery] = useState("");
+    const [search, setSearch] = useState("");
     const [history, setHistory] = useState<HistoryItem[]>([]);
     const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -33,11 +31,11 @@ export default function HistoryPage() {
     },[]);
 
     const filtered = useMemo (()=> {
-        const q = query.toLowerCase();
+        const q = search.toLowerCase();
         return history.filter((it) =>
             it.title.toLowerCase().includes(q) || it.date.toLowerCase().includes(q) || it.time.toLowerCase().includes(q)
         );
-    }, [query, history]);
+    }, [search, history]);
 
     return (
         <div className="home">
@@ -45,7 +43,7 @@ export default function HistoryPage() {
             <h2 className="history_selection-title">History</h2>
             
             <div className="history-search">
-                <input type="text" placeholder="Search..." value={query} onChange={(e) => setQuery(e.target.value)} />
+                <input type="text" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
             </div>
             
             {toastMessage && <div className="history-error">{toastMessage}</div>}
