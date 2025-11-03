@@ -18,7 +18,7 @@ To run the project locally, follow the steps below:
 
 2) Once inside "BookingApp". Type in this command ```cd Frontend```. This navigates you to the frontend folder.
 
-3) Inside the frontend folder you type in this command ````npm install```. It installs everything you need to run the frontend on your computer.
+3) Inside the frontend folder you type in this command ```npm install```. It installs everything you need to run the frontend on your computer.
 
 4) Lastly you'll need to type in this command ```npm run dev```. This runs the frontend project. Just make sure that the backend project is running as well otherwise it's not going to work.
 
