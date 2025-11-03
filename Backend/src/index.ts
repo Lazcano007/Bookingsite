@@ -9,12 +9,12 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use( cors ({ origin: "*" }));
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 app.use('/api', router);
 
-app.get("/", (req, res) => {
-  res.json({ message: "Server is upp and running!"})
+app.get('/', (req, res) => {
+  res.json({ message: 'Server is upp and running!' });
 });
 
 connectDB();
