@@ -1,7 +1,7 @@
 # Booking App - (Backend Documentation)
 I created a booking application API that allows the user to create or delete a booked time. If you are an admin you can create, update or delete a user. This application is meant to be for barbers to perfectly plan and view booked appointments.
 
-### Tech-Stack:
+### Tech-Stack
 - Database: MongoDB
 - Express.js 
 - Node.js
@@ -45,3 +45,7 @@ To get started you need to have insomnia or postman installed on your computer.
 ---
 ## Deployment
 Here is the link for the deployed backend on render: [Booking App Backend (Render)](https://bookingsite-cp9v.onrender.com)
+
+---
+## Code-standard
+This project follows Airbnb JavaScript Style Guide through "estlintrc.cjs" file in backend. Prettier is also used to ensure consisten code through the whole project as well.
