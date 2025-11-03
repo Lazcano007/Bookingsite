@@ -26,6 +26,7 @@ All these routes require a registered account.
 - `POST /api/bookings` - This creates a new booking.
 - `DELETE /api/bookings/:id` - This cancels a booking.
 
+---
 ### Getting started:
 To get started you need to have insomnia or postman installed on your computer.
 1) Create a folder called "BookingApp" and open it with VSC. Once opened type this command ```git clone https://github.com/Lazcano007/Bookingsite.git```. This is going to clone the project from Github to your computer.
@@ -41,6 +42,6 @@ To get started you need to have insomnia or postman installed on your computer.
 
 6) Lastly start your Insomnia/Postman and test out the different CRUD endpoints in this API.
 
-
+---
 ## Deployment
 Here is the link for the deployed backend on render: [Booking App Backend (Render)](https://bookingsite-cp9v.onrender.com)
