@@ -1,69 +1,35 @@
-# React + TypeScript + Vite
+# Booking App - (Frontend Documentation)
+This is the frontend to the bookingsystem. It was built with **VITE**, **TypeScript** and **React**, and it communicates with the backend API and manages users, admin and bookings
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
+## Tech-Stack
 
-Currently, two official plugins are available:
+- **TypeScript**
+- **React**
+- **VITE**
+- **AXIOS**
+- **SCSS**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
+## Getting Started
+To run the project locally, follow the steps below:
 
-## Expanding the ESLint configuration
+1) Open up the "BookingApp" folder you created earlier when you cloned the project from github.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+2) Once inside "BookingApp". Type in this command ```cd Frontend```. This navigates you to the frontend folder.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+3) Inside the frontend folder you type in this command ````npm install```. It installs everything you need to run the frontend on your computer.
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+4) Lastly you'll need to type in this command ```npm run dev```. This runs the frontend project. Just make sure that the backend project is running as well otherwise it's not going to work.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+## Figma Design
+Here is my figma design showing my initial layout and idea for the application: [Figma-desing (frontend)](https://www.figma.com/design/cuTy2tHXsIv8i72OqglGgM/U10-BOKNINGSAPP?node-id=0-1&p=f&t=QBsWaFGaHa3MMRDT-0)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
+## Deployment
+I decided to deploy the frontend on netlify and connected to the backend deployment on render: [Booking App (frontend)](https://fresh-line-barbers.netlify.app/)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+## Code-Standard
+The frontend is formatted with **Prettier** to ensure consistent styling in TypeScript and SCSS.
