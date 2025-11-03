@@ -2,13 +2,13 @@
   display: flex;
   align-items: center;
   gap: 10px;
- 
 
-  &::before, &::after {
+  &::before,
+  &::after {
     content: "";
     flex: 1;
     height: 1px;
-    background: #000000; 
+    background: #000000;
   }
 
   span {

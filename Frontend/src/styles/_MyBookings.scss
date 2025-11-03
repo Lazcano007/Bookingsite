@@ -1,12 +1,12 @@
 .home {
-  background: #4504dd; 
-  padding:20px;
+  background: #4504dd;
+  padding: 20px;
   border-radius: 70px;
   width: 90%;
-  margin: auto; 
+  margin: auto;
 }
 
-.booking_selection-title{
+.booking_selection-title {
   text-align: center;
   margin: 25px;
   font-size: 35px;
@@ -44,8 +44,8 @@
   font-size: 15px;
   font-weight: bold;
   transition: background-color 0.3s ease;
-  
-    &:hover {
+
+  &:hover {
     background-color: #5a3df2;
   }
 }
@@ -60,10 +60,11 @@
   }
 }
 
-.booking-date, .booking-service {
+.booking-date,
+.booking-service {
   color: black;
   font-size: 20px;
-  margin: 0 40px 0 40px; 
+  margin: 0 40px 0 40px;
 }
 
 .toast {

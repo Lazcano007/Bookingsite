@@ -9,7 +9,6 @@
   width: 400px;
   justify-self: center;
   flex-wrap: wrap;
-
 }
 
 .service-card_title {
@@ -17,7 +16,6 @@
   font-weight: 700;
   margin: 0 0 10px;
 }
-
 
 .service-card_price {
   font-size: 23px;
@@ -28,7 +26,6 @@
   margin: 10px;
   display: inline-block;
 }
-
 
 @media (max-width: 450px) {
   .service-card {

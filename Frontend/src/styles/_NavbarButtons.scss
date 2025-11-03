@@ -1,63 +1,61 @@
 .navbar-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    flex-wrap: wrap;
-    
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
 }
 
 .navbar {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
-    flex-grow: 1;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-grow: 1;
 }
 
 .navbtn {
-    background-color: white;
-    color: black;
-    text-decoration: none;
-    border-radius: 900px;
-    padding: 10px 20px;
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 20px;
-    display: inline-block;
-    transition: all 0.3s ease;
+  background-color: white;
+  color: black;
+  text-decoration: none;
+  border-radius: 900px;
+  padding: 10px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 20px;
+  display: inline-block;
+  transition: all 0.3s ease;
 
-    &:hover {
-        background-color: #5a3df2;
-        color: white;
-    }
+  &:hover {
+    background-color: #5a3df2;
+    color: white;
+  }
 }
 
 .logout-btn {
-    background-color: white;
-    color: black;
-    border-radius: 900px;
-    padding: 10px 20px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 20px;
-    transition: 0.3s ease;
-    border: none;
-    font-family: inherit;
+  background-color: white;
+  color: black;
+  border-radius: 900px;
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 20px;
+  transition: 0.3s ease;
+  border: none;
+  font-family: inherit;
 
-    &:hover {
-        background-color: #5a3df2;
-        color: white;
-    }
+  &:hover {
+    background-color: #5a3df2;
+    color: white;
+  }
 }
 
 .navbar-user {
-    font-weight: bold;
-    color: white;
-    width: 100%;
-    text-align: center;
-    margin-top: 1rem;
-    font-family: inherit;
-    font-size: 30px;
+  font-weight: bold;
+  color: white;
+  width: 100%;
+  text-align: center;
+  margin-top: 1rem;
+  font-family: inherit;
+  font-size: 30px;
 }
-
