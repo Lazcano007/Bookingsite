@@ -90,9 +90,9 @@ export const getUserById = async (req: Request, res: Response) => {
 
 export const getAllUser = async (req: Request, res: Response) => {
   try {
-    const users = await User.find({ role: { $ne: 'admin' } }).select(
+    const users = await User.find({ role: { $ne: 'admin' } }).select( // den tar itne med lösenord, och $ne betyder "inte lika med" alltså att den hämtar alla användarer som inte är admin
       '-password'
-    ); // den tar itne med lösenordet och $ne betyder "inte lika med" alltså att den hämtar alla användarer som inte är admin
+    ); 
     res.status(200).json(users);
   } catch (error) {
     res

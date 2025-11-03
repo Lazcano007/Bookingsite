@@ -46,8 +46,8 @@ export const getUserBookings = async (req: Request, res: Response) => {
   try {
     const { user } = req as AuthenticatedRequest;
     const bookings = await Booking.find({ userId: user._id }).sort({
-      date: 1,
-      time: 1,
+      date: 1,      // 1 betyder stigande ordning (ascending). alltså i vilken ordning db returerar bokingarna.  
+      time: 1,      // --"--
     });
     res.status(200).json(bookings);
   } catch (error) {
@@ -64,7 +64,7 @@ export const getBookedTimes = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'You have to provide a date' });
     }
     const bookings = await Booking.find({ date, status: 'active' });
-    const bookedTimes = [...new Set(bookings.map((b) => b.time))].sort();
+    const bookedTimes = [...new Set(bookings.map((b) => b.time))].sort(); // Skapar en lista med bokade tider samt tar bort dubbleter och returerar tider i en sorterad lsta.
     res.status(200).json({ date, bookedTimes });
   } catch (error) {
     res
@@ -125,19 +125,19 @@ export const getBookingHistory = async (req: Request, res: Response) => {
       return res.status(401).json({ message: 'You are not authorized' });
 
     const today = new Date();
-    today.setUTCHours(0, 0, 0, 0);
+    today.setUTCHours(0, 0, 0, 0);  // Sätter dagens tid till 00:00 (midnatt) så att vi kan jämnföra bara datumet o inte tiden.  
 
     let history;
     if (user.role === 'admin') {
       history = await Booking.find({ date: { $lt: today } })
         .sort({ date: -1 })
-        .populate('userId', 'name');
+        .populate('userId', 'name');   // "populate" hämtar hela användardokumnetet men vi vill bara visa namn, därför skirver vi "name". 
     } else {
       history = await Booking.find({
         userId: user._id,
         status: 'active',
-        date: { $lt: today },
-      }).sort({ date: -1 });
+        date: { $lt: today },    // $lt btyder "mindre än (<)". Alltså äldre boknigar än idag visas i HistoryPage.
+      }).sort({ date: -1 });     // -1 betyder desending order. Alltså störst till minst
     }
     res.status(200).json(history);
   } catch (error) {
