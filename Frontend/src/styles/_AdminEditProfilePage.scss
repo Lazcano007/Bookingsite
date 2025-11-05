@@ -53,6 +53,7 @@
 }
 
 .adminEdit-label {
+  margin-top: 1rem;
   display: grid;
   gap: 15px;
   color: black;
@@ -80,6 +81,13 @@
   &:hover {
     background-color: #5a3df2;
   }
+}
+
+.adminEdit-select {
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
 }
 
 @media (max-width: 560px) {
