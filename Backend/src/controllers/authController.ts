@@ -12,12 +12,12 @@ export const registerUser = async (req: Request, res: Response) => {
     if (!name || !email || !password) {
       return res
         .status(400)
-        .json({ message: 'You have to fill all the fields' });
+        .json({ message: 'You have to fill all the fields!' });
     }
 
     const userExists = await User.findOne({ email });
     if (userExists) {
-      return res.status(400).json({ message: 'This user already exists' });
+      return res.status(400).json({ message: 'This user already exists!' });
     }
     const hashedPassword = await hashPassword(password);
     const newUser = await User.create({
@@ -33,7 +33,7 @@ export const registerUser = async (req: Request, res: Response) => {
       token: generateToken((newUser._id as string).toString(), newUser.role),
     });
   } catch (error) {
-    res.status(500).json({ message: 'Theres been a server error', error });
+    res.status(500).json({ message: 'Theres been a server error!', error });
   }
 };
 
@@ -42,12 +42,12 @@ export const loginUser = async (req: Request, res: Response) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ message: 'Wrong email or password' });
+      return res.status(401).json({ message: 'You wrote the wrong email or password!' });
     }
 
     const isCorrectPassword = await verifyPassword(password, user.password);
     if (!isCorrectPassword) {
-      return res.status(400).json({ message: 'Wrong email or password' });
+      return res.status(400).json({ message: 'You wrote the Wrong email or password!' });
     }
     res.status(200).json({
       _id: user._id,
@@ -97,34 +97,43 @@ export const getAllUser = async (req: Request, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json({ message: 'Theres beena an error fetching all user', error });
+      .json({ message: 'Theres been an error fetching all user!', error });
   }
 };
 
 export const updateUser = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { name } = req.body;
-    if (!name) {
-      return res.status(400).json({ message: 'You have to write a new name' });
+    const { name, role } = req.body;
+    if (!name && !role) {
+      return res.status(400).json({ message: 'You must update at least one fild to update!' });
+    }
+
+    const updateFields: any = {};
+    if(name) updateFields.name = name;
+    if(role) {
+      if(!['user', 'admin'].includes(role))  {
+        return res.status(400).json({ message: "This is an invalid value!" });
+      }
+      updateFields.role = role;
     }
 
     const updatedUser = await User.findByIdAndUpdate(
       id,
-      { name },
+      updateFields,
       { new: true, select: '-password' }
     );
     if (!updatedUser) {
-      return res.status(404).json({ message: 'This user is not found' });
+      return res.status(404).json({ message: 'This user is not found!' });
     }
     res.status(200).json({
-      message: 'This user has been successfilly updated',
+      message: 'This user has been successfilly updated!',
       user: updatedUser,
     });
   } catch (error) {
     res
       .status(500)
-      .json({ message: 'Theres been an error fetching all user!', error });
+      .json({ message: 'Theres been an error updating this user!', error });
   }
 };
 
@@ -133,7 +142,7 @@ export const deleteUser = async (req: Request, res: Response) => {
     const { id } = req.params;
     const deletedUser = await User.findByIdAndDelete(id);
     if (!deletedUser) {
-      return res.status(404).json({ message: 'This user is not found' });
+      return res.status(404).json({ message: 'This user is not found!' });
     }
 
     const deletedBookings = await Booking.deleteMany({
@@ -146,7 +155,7 @@ export const deleteUser = async (req: Request, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json({ message: 'Theres been an error deleting user', error });
+      .json({ message: 'Theres been an error deleting user!', error });
   }
 };
 
@@ -193,6 +202,7 @@ export const getAllBookings = async (req: Request, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json({ message: 'Theres been an error fetching all bookings', error });
+      .json({ message: 'Theres been an error fetching all bookings!', error });
   }
 };
+

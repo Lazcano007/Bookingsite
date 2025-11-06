@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 type Profile = {
     _id: string;
     name: string;
+    role: string;
 };
 
 export default function _AdminEditPage() {
@@ -15,6 +16,7 @@ export default function _AdminEditPage() {
     const navigate = useNavigate();
     const [profile, setProfile] = useState<Profile | null>(null)
     const [name, setName] =  useState("");
+    const [role, setRole] = useState("user")
     const [toastMessage, setToastMessage] = useState<string | null>(null);
 
     useEffect(() => {
@@ -23,8 +25,9 @@ export default function _AdminEditPage() {
             const res = await api.get(`/admin/profiles/${id}`);
             setProfile(res.data);
             setName(res.data.name);
+            setRole((prev) => prev || res.data.role || "user");
         } catch (err: any) {
-            setToastMessage ( err.response?.data?.message || "Therws been a problem fetching this profile!");
+            setToastMessage ( err.response?.data?.message || "Theres been a problem fetching this profile!");
         }
     };
     fetchProfile();
@@ -33,6 +36,7 @@ export default function _AdminEditPage() {
     const handleDelete = async () => {
         if(!confirm("Are you sure you want to delete this user?")) 
             return;
+         console.log("Saving:", { name, role }); // 👈 se om role verkligen är "admin"
         try {
             await api.delete(`/admin/profiles/${id}`);
             navigate("/admin/profiles");
@@ -43,7 +47,8 @@ export default function _AdminEditPage() {
 
     const handleSave = async () => {
         try {
-            await api.put(`/admin/profiles/${id}`, {name});
+            console.log("Saving:", { name, role });
+            await api.put(`/admin/profiles/${id}`, {name, role});
             navigate("/admin/profiles");
         } catch (err: any) {
             setToastMessage(err.response?.data?.message || "Theres been an error saving this profile!");
@@ -62,6 +67,11 @@ export default function _AdminEditPage() {
                     <button className="delete-btn" onClick={handleDelete}>DELETE</button>
                     <label className="adminEdit-label">Name:</label>
                     <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="adminEdit-input"/>
+                    <label className="adminEdit-label">Role:</label>
+                    <select value={role} onChange={(e) => setRole(e.target.value)} className="adminEdit-select">
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
                     <button className="save-btn" onClick={handleSave}>SAVE</button>
                 </div>
             </div>
