@@ -16,7 +16,7 @@ export default function _AdminEditPage() {
     const navigate = useNavigate();
     const [profile, setProfile] = useState<Profile | null>(null)
     const [name, setName] =  useState("");
-    const [role, setRole] = useState("user")
+    const [role, setRole] = useState("")
     const [toastMessage, setToastMessage] = useState<string | null>(null);
 
     useEffect(() => {
@@ -36,7 +36,6 @@ export default function _AdminEditPage() {
     const handleDelete = async () => {
         if(!confirm("Are you sure you want to delete this user?")) 
             return;
-         console.log("Saving:", { name, role }); // 👈 se om role verkligen är "admin"
         try {
             await api.delete(`/admin/profiles/${id}`);
             navigate("/admin/profiles");
