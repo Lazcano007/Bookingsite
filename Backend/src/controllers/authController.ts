@@ -198,7 +198,9 @@ export const createUserByAdmin = async (req: Request, res: Response) => {
 export const getAllBookings = async (req: Request, res: Response) => {
   try {
     const bookings = await Booking.find().populate('userId', 'name email');
-    res.status(200).json(bookings);
+
+    const validBookings = bookings.filter(booking => booking.userId !== null);
+    res.status(200).json(validBookings);
   } catch (error) {
     res
       .status(500)
