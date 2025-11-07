@@ -34,7 +34,7 @@ export const protect = async (
     const decoded = jwt.verify(token, secret) as { id: string; role: string };
     const user = await User.findById(decoded.id)
       .select('name email role')
-      .lean();    // Detta returerar vanligt JavaScript-objekt istället för mongo dokumnet då den oftast tenderar att skicka med massa annat data och gör att det blir långsammare.
+      .lean(); // Detta returerar vanligt JavaScript-objekt istället för mongo dokumnet då den oftast tenderar att skicka med massa annat data och gör att det blir långsammare.
     if (!user) {
       return res.status(401).json({ message: 'user not found' });
     }

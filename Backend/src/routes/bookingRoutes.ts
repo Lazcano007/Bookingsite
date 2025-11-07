@@ -1,7 +1,6 @@
 import express from 'express';
 import {
   createBooking,
-  getUserBookings,
   getBookedTimes,
   cancelBooking,
   getUpcomingBooking,

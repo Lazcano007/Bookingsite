@@ -42,12 +42,16 @@ export const loginUser = async (req: Request, res: Response) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ message: 'You wrote the wrong email or password!' });
+      return res
+        .status(401)
+        .json({ message: 'You wrote the wrong email or password!' });
     }
 
     const isCorrectPassword = await verifyPassword(password, user.password);
     if (!isCorrectPassword) {
-      return res.status(400).json({ message: 'You wrote the Wrong email or password!' });
+      return res
+        .status(400)
+        .json({ message: 'You wrote the Wrong email or password!' });
     }
     res.status(200).json({
       _id: user._id,
@@ -90,9 +94,10 @@ export const getUserById = async (req: Request, res: Response) => {
 
 export const getAllUser = async (req: Request, res: Response) => {
   try {
-    const users = await User.find({ role: { $ne: 'admin' } }).select( // den tar itne med lösenord, och $ne betyder "inte lika med" alltså att den hämtar alla användarer som inte är admin
+    const users = await User.find({ role: { $ne: 'admin' } }).select(
+      // den tar itne med lösenord, och $ne betyder "inte lika med" alltså att den hämtar alla användarer som inte är admin
       '-password'
-    ); 
+    );
     res.status(200).json(users);
   } catch (error) {
     res
@@ -106,23 +111,24 @@ export const updateUser = async (req: Request, res: Response) => {
     const { id } = req.params;
     const { name, role } = req.body;
     if (!name && !role) {
-      return res.status(400).json({ message: 'You must update at least one fild to update!' });
+      return res
+        .status(400)
+        .json({ message: 'You must update at least one fild to update!' });
     }
 
     const updateFields: any = {};
-    if(name) updateFields.name = name;
-    if(role) {
-      if(!['user', 'admin'].includes(role))  {
-        return res.status(400).json({ message: "This is an invalid value!" });
+    if (name) updateFields.name = name;
+    if (role) {
+      if (!['user', 'admin'].includes(role)) {
+        return res.status(400).json({ message: 'This is an invalid value!' });
       }
       updateFields.role = role;
     }
 
-    const updatedUser = await User.findByIdAndUpdate(
-      id,
-      updateFields,
-      { new: true, select: '-password' }
-    );
+    const updatedUser = await User.findByIdAndUpdate(id, updateFields, {
+      new: true,
+      select: '-password',
+    });
     if (!updatedUser) {
       return res.status(404).json({ message: 'This user is not found!' });
     }
@@ -199,7 +205,7 @@ export const getAllBookings = async (req: Request, res: Response) => {
   try {
     const bookings = await Booking.find().populate('userId', 'name email');
 
-    const validBookings = bookings.filter(booking => booking.userId !== null);
+    const validBookings = bookings.filter((booking) => booking.userId !== null);
     res.status(200).json(validBookings);
   } catch (error) {
     res
@@ -207,4 +213,3 @@ export const getAllBookings = async (req: Request, res: Response) => {
       .json({ message: 'Theres been an error fetching all bookings!', error });
   }
 };
-
