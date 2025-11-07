@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Booking from '../models/bookingModel';
 import { AuthenticatedRequest } from '../middlewares/authMiddleware';
+import { sendBookingEmail } from '../utils/sendEmail';
 
 export const createBooking = async (req: Request, res: Response) => {
   try {
@@ -9,7 +10,7 @@ export const createBooking = async (req: Request, res: Response) => {
     if (!title || !price || !date || !time) {
       return res
         .status(400)
-        .json({ message: 'You have to choose a date and time' });
+        .json({ message: 'You have to choose a date and time!' });
     }
 
     const existingBooking = await Booking.findOne({
@@ -20,7 +21,7 @@ export const createBooking = async (req: Request, res: Response) => {
     if (existingBooking) {
       return res
         .status(400)
-        .json({ message: 'This time on this date is already booked' });
+        .json({ message: 'This time on this date is already booked!' });
     }
 
     const newBooking = await Booking.create({
@@ -30,13 +31,20 @@ export const createBooking = async (req: Request, res: Response) => {
       date,
       time,
     });
+
+    try {
+      await sendBookingEmail(user.email, newBooking);
+    } catch (error) {
+      console.error('Email faild to send', error);
+    }
+
     res.status(201).json({
-      message: 'Your booking was created successfuly',
+      message: 'Your booking was created successfuly!',
       booking: newBooking,
     });
   } catch (error) {
     res.status(500).json({
-      message: 'Theres been an error with your booking creation',
+      message: 'Theres been an error with your booking creation!',
       error,
     });
   }
@@ -53,7 +61,7 @@ export const getUserBookings = async (req: Request, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json({ message: 'Theres been an error fetching your bookings', error });
+      .json({ message: 'Theres been an error fetching your bookings!', error });
   }
 };
 
@@ -61,7 +69,7 @@ export const getBookedTimes = async (req: Request, res: Response) => {
   try {
     const { date } = req.params;
     if (!date) {
-      return res.status(400).json({ message: 'You have to provide a date' });
+      return res.status(400).json({ message: 'You have to provide a date!' });
     }
     const bookings = await Booking.find({ date, status: 'active' });
     const bookedTimes = [...new Set(bookings.map((b) => b.time))].sort(); // Skapar en lista med bokade tider samt tar bort dubbleter och returerar tider i en sorterad lsta.
@@ -69,7 +77,7 @@ export const getBookedTimes = async (req: Request, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json({ message: 'Theres been an error fetching booked times', error });
+      .json({ message: 'Theres been an error fetching booked times!', error });
   }
 };
 
@@ -82,15 +90,15 @@ export const cancelBooking = async (req: Request, res: Response) => {
       { new: true }
     );
     if (!booking) {
-      return res.status(404).json({ message: 'This booking does not exist' });
+      return res.status(404).json({ message: 'This booking does not exist!' });
     }
     res
       .status(200)
-      .json({ message: 'You have cancelled you booking', booking });
+      .json({ message: 'You have cancelled you booking!', booking });
   } catch (error) {
     res
       .status(500)
-      .json({ message: 'Theres been an error cancelling your booking', error });
+      .json({ message: 'Theres been an error cancelling your booking!', error });
   }
 };
 
@@ -98,7 +106,7 @@ export const getUpcomingBooking = async (req: Request, res: Response) => {
   try {
     const { user } = req as AuthenticatedRequest;
     if (!user)
-      return res.status(401).json({ message: 'You are not authorized' });
+      return res.status(401).json({ message: 'You are not authorized!' });
 
     const today = new Date();
     const allBookings = await Booking.find({
@@ -112,7 +120,7 @@ export const getUpcomingBooking = async (req: Request, res: Response) => {
     res.status(200).json(upcoming);
   } catch (error) {
     res.status(500).json({
-      message: 'Theres been an error fetching upcoming booking',
+      message: 'Theres been an error fetching upcoming booking!',
       error,
     });
   }
@@ -122,7 +130,7 @@ export const getBookingHistory = async (req: Request, res: Response) => {
   try {
     const { user } = req as AuthenticatedRequest;
     if (!user)
-      return res.status(401).json({ message: 'You are not authorized' });
+      return res.status(401).json({ message: 'You are not authorized!' });
 
     const today = new Date();
     today.setUTCHours(0, 0, 0, 0);  // Sätter dagens tid till 00:00 (midnatt) så att vi kan jämnföra bara datumet o inte tiden.  
@@ -142,7 +150,7 @@ export const getBookingHistory = async (req: Request, res: Response) => {
     res.status(200).json(history);
   } catch (error) {
     res.status(500).json({
-      message: 'Theres been an error fetching your booking history',
+      message: 'Theres been an error fetching your booking history!',
       error,
     });
   }
