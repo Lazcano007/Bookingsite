@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import Booking from '../models/bookingModel';
 import { AuthenticatedRequest } from '../middlewares/authMiddleware';
-
+import { sendBookingEmail } from '../utils/sendEmail';
 
 export const createBooking = async (req: Request, res: Response) => {
   try {
@@ -32,6 +32,12 @@ export const createBooking = async (req: Request, res: Response) => {
       time,
       status: "active",
     });
+
+    try {
+      await sendBookingEmail(user.email, newBooking);
+    } catch (error) {
+      console.error('Email faild to send', error);
+    }
 
     res.status(201).json({
       message: 'Your booking was created successfuly!',
