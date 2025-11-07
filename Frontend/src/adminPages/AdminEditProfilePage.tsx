@@ -46,7 +46,6 @@ export default function _AdminEditPage() {
 
     const handleSave = async () => {
         try {
-            console.log("Saving:", { name, role });
             await api.put(`/admin/profiles/${id}`, {name, role});
             navigate("/admin/profiles");
         } catch (err: any) {
