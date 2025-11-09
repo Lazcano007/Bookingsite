@@ -37,7 +37,7 @@ export default function HomePage() {
           "/bookings", {
             title: selectedService.title,
             price: selectedService.price,
-            date: selectedDate!.toISOString(),
+            date: selectedDate!.toISOString().split("T")[0],
             time: selectedTime!,
           }, {
             headers: { Authorization: `Bearer ${token}`}
