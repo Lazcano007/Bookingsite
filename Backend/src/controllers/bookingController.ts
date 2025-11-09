@@ -3,7 +3,6 @@ import Booking from '../models/bookingModel';
 import { AuthenticatedRequest } from '../middlewares/authMiddleware';
 import { sendBookingEmail } from '../utils/sendEmail';
 
-
 export const createBooking = async (req: Request, res: Response) => {
   try {
     const { user } = req as AuthenticatedRequest; // Hämtar inloggade användaren
@@ -35,8 +34,11 @@ export const createBooking = async (req: Request, res: Response) => {
 
     if (user?.email) {
       (async () => {
-        try { await sendBookingEmail(user.email, newBooking); }
-        catch (e) { console.error('Email failed:', e); }
+        try {
+          await sendBookingEmail(user.email, newBooking);
+        } catch (e) {
+          console.error('Email failed:', e);
+        }
       })();
     }
 
